@@ -1,29 +1,44 @@
 <script setup>
 import { ref } from 'vue'
+
+const props = defineProps({
+    x: Number,
+    y: Number
+})
+
 const size = ref([256, 256]);
-const center = ref([size.value[0] / 2, size.value[1] / 2]);
+const center = ref([props.x, props.y]);
 const extent = ref([0, 0, ...size.value]);
+
 const projection = ref({
     units: "pixels",
     extent: extent,
 })
-const zoom = ref(0)
+
+const zoom = ref(3)
 const rotation = ref(0)
+
 const currentZoom = ref(zoom.value);
+const currentCenter = ref(center.value);
 
 function resolutionChanged(event) {
     currentZoom.value = event.target.getZoom();
 }
 
+function centerChanged(event) {
+  currentCenter.value = event.target.getCenter();
+}
+
 defineExpose({
-    currentZoom
+    currentZoom,
+    currentCenter
 })
 </script>
 
 <template>
     <ol-map :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" style="height:100%;">
         <ol-view :center="center" :rotation="rotation" :zoom="zoom" :projection="projection"
-            @change:resolution="resolutionChanged" />
+            @change:resolution="resolutionChanged" @change:center="centerChanged" />
         <ol-tile-layer>
             <ol-source-xyz url="/tiles/{z}/tile_{x}_{y}.png" :projection="projection" />
         </ol-tile-layer>
