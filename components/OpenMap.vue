@@ -1,5 +1,7 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
+import type { ObjectEvent } from "ol/Object";
+import type { View } from "ol";
 
 const props = defineProps({
     x: Number,
@@ -11,6 +13,7 @@ const center = ref([props.x, props.y]);
 const extent = ref([0, 0, ...size.value]);
 
 const projection = ref({
+    code: "xkcd-image",
     units: "pixels",
     extent: extent,
 })
@@ -21,13 +24,16 @@ const rotation = ref(0)
 const currentZoom = ref(zoom.value);
 const currentCenter = ref(center.value);
 
-function resolutionChanged(event) {
+function resolutionChanged(event: ObjectEvent) {
     currentZoom.value = event.target.getZoom();
 }
 
-function centerChanged(event) {
-  currentCenter.value = event.target.getCenter();
+function centerChanged(event: ObjectEvent) {
+    currentCenter.value = event.target.getCenter();
 }
+
+const map = ref(null);
+const view = ref < View > ();
 
 defineExpose({
     currentZoom,
@@ -36,9 +42,12 @@ defineExpose({
 </script>
 
 <template>
-    <ol-map :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" style="height:100%;" :controls="[]">
-        <ol-view :center="center" :rotation="rotation" :zoom="zoom" :projection="projection"
-            @change:resolution="resolutionChanged" @change:center="centerChanged" :enableRotation="false" />
+    <ol-map :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" style="height:100%;" :controls="[]"
+        ref="map">
+        <ol-view ref="view" :center="center" :rotation="rotation" :zoom="zoom" :projection="projection"
+            @change:resolution="resolutionChanged" @change:center="centerChanged" :enableRotation="false" :maxZoom="6"
+            :minZoom="2" :extent="extent" constrainOnlyCenter />
+
         <ol-tile-layer>
             <ol-source-xyz url="/tiles/{z}/tile_{x}_{y}.png" :projection="projection" />
         </ol-tile-layer>
