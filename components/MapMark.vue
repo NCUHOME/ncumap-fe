@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const props = defineProps<{
-    coordinates: (number | undefined)[]
+    coordinates: (number | undefined)[],
 }>()
 </script>
 

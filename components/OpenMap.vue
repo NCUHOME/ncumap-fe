@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import type { ObjectEvent } from "ol/Object";
 import type { View, Feature } from "ol";
+import { Style, Icon } from 'ol/style';
 
 const props = defineProps({
     x: Number,
@@ -35,7 +36,7 @@ function centerChanged(event: ObjectEvent) {
 const view = ref<View>();
 
 const marks = ref({
-    user: center,
+    "餐厅": center,
     a: [50, 50],
     b: [55, 50],
     c: [60, 50],
@@ -43,6 +44,26 @@ const marks = ref({
     e: [70, 50],
     f: [75, 50],
 })
+
+const selectConditions = inject("ol-selectconditions");
+
+const selectCondition = selectConditions.singleClick;
+
+const featureSelected = (event: ObjectEvent) => {
+    const selectedFeatures = event.target.getFeatures();
+    selectedFeatures.forEach((feature: any) => {
+        const coordinates = feature.getGeometry().getCoordinates();
+        console.log('选中的标记位置:', coordinates);
+    })
+};
+
+const overrideStyleFunction = (feature: Feature, style: Style) => {
+    style.setImage(new Icon({
+        src: '/运动场.svg',
+    }))
+
+    return style
+}
 
 defineExpose({
     currentZoom,
@@ -59,6 +80,10 @@ defineExpose({
         <ol-tile-layer>
             <ol-source-xyz url="/tiles/{z}/tile_{x}_{y}.png" :projection="projection" />
         </ol-tile-layer>
+
+        <ol-interaction-select @select="featureSelected" :condition="selectCondition">
+            <ol-style :overrideStyleFunction="overrideStyleFunction"></ol-style>
+        </ol-interaction-select>
 
         <ol-vector-layer>
             <ol-source-vector>
