@@ -36,9 +36,9 @@ defineExpose({
 </script>
 
 <template>
-    <ol-map :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" style="height:100%;">
+    <ol-map :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" style="height:100%;" :controls="[]">
         <ol-view :center="center" :rotation="rotation" :zoom="zoom" :projection="projection"
-            @change:resolution="resolutionChanged" @change:center="centerChanged" />
+            @change:resolution="resolutionChanged" @change:center="centerChanged" :enableRotation="false" />
         <ol-tile-layer>
             <ol-source-xyz url="/tiles/{z}/tile_{x}_{y}.png" :projection="projection" />
         </ol-tile-layer>
