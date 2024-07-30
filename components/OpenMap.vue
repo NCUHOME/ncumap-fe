@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { ObjectEvent } from "ol/Object";
-import type { View } from "ol";
+import type { View, Feature } from "ol";
 
 const props = defineProps({
     x: Number,
@@ -32,8 +32,17 @@ function centerChanged(event: ObjectEvent) {
     currentCenter.value = event.target.getCenter();
 }
 
-const map = ref(null);
-const view = ref < View > ();
+const view = ref<View>();
+
+const marks = ref({
+    user: center,
+    a: [50, 50],
+    b: [55, 50],
+    c: [60, 50],
+    d: [65, 50],
+    e: [70, 50],
+    f: [75, 50],
+})
 
 defineExpose({
     currentZoom,
@@ -42,8 +51,7 @@ defineExpose({
 </script>
 
 <template>
-    <ol-map :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" style="height:100%;" :controls="[]"
-        ref="map">
+    <ol-map :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" style="height:100%;" :controls="[]">
         <ol-view ref="view" :center="center" :rotation="rotation" :zoom="zoom" :projection="projection"
             @change:resolution="resolutionChanged" @change:center="centerChanged" :enableRotation="false" :maxZoom="6"
             :minZoom="2" :extent="extent" constrainOnlyCenter />
@@ -51,6 +59,12 @@ defineExpose({
         <ol-tile-layer>
             <ol-source-xyz url="/tiles/{z}/tile_{x}_{y}.png" :projection="projection" />
         </ol-tile-layer>
+
+        <ol-vector-layer>
+            <ol-source-vector>
+                <MapMark v-for="coordinate in Object.values(marks)" :coordinates="coordinate" />
+            </ol-source-vector>
+        </ol-vector-layer>
     </ol-map>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-    <div style="height: 100vh;width: 100%;position: absolute;">
+    <div style="height: 100%;width: 100%;position: absolute;">
         <ClientOnly>
             <OpenMap ref="map" :x="location.x" :y="location.y" />
             <template #fallback> Loading map... </template>
