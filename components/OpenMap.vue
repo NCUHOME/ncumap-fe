@@ -53,15 +53,20 @@ const featureSelected = (event: ObjectEvent) => {
     const selectedFeatures = event.target.getFeatures();
     selectedFeatures.forEach((feature: any) => {
         const coordinates = feature.getGeometry().getCoordinates();
+        view.value?.setCenter(coordinates)
         console.log('选中的标记位置:', coordinates);
     })
 };
 
+const selectInteactionFilter = (feature: any) => {
+  return feature.values_.name != undefined;
+};
+
 const overrideStyleFunction = (feature: Feature, style: Style) => {
     style.setImage(new Icon({
-        src: '/运动场.svg',
+        src: `/${feature.getProperties().name}.svg`,
+        scale: 1.3
     }))
-
     return style
 }
 
@@ -81,13 +86,13 @@ defineExpose({
             <ol-source-xyz url="/tiles/{z}/tile_{x}_{y}.png" :projection="projection" />
         </ol-tile-layer>
 
-        <ol-interaction-select @select="featureSelected" :condition="selectCondition">
+        <ol-interaction-select @select="featureSelected" :condition="selectCondition" :filter="selectInteactionFilter">
             <ol-style :overrideStyleFunction="overrideStyleFunction"></ol-style>
         </ol-interaction-select>
 
         <ol-vector-layer>
             <ol-source-vector>
-                <MapMark v-for="coordinate in Object.values(marks)" :coordinates="coordinate" />
+                <MapMark v-for="(coordinate, index) in Object.values(marks)" :coordinates="coordinate" :key="index" />
             </ol-source-vector>
         </ol-vector-layer>
     </ol-map>
