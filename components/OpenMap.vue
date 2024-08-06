@@ -55,7 +55,8 @@ const selectInteactionFilter = (feature: any) => {
 const overrideStyleFunction = (feature: Feature, style: Style) => {
     style.setImage(new Icon({
         src: `/${feature.getProperties().name}.svg`,
-        scale: 1.3
+        scale: 1.3,
+        anchor: [0.5, 1]
     }))
     return style
 }
@@ -84,11 +85,22 @@ onMounted(async () => {
     }
 })
 
+const viewTo = (coordinates: number[]) => {
+    view.value?.setCenter(convertCoordinates(coordinates))
+}
+
+const zoomTo = (zoom: number) => {
+    view.value?.setZoom(zoom)
+}
+
 defineExpose({
     currentZoom,
     currentCenter,
     categories,
-    currentCategory
+    currentCategory,
+    marks,
+    viewTo,
+    zoomTo
 })
 </script>
 
@@ -112,14 +124,14 @@ defineExpose({
                     <template v-if="currentCategory == 0">
                         <template v-for="category in categories">
                             <template v-for="mark in marks[category]">
-                                <MapMark v-if="mark.priority < currentZoom"
+                                <MapMark v-if="mark.priority <= currentZoom"
                                     :coordinates="convertCoordinates(mark.coordinates)" :name="mark.name" />
                             </template>
                         </template>
                     </template>
                     <template v-else>
                         <template v-for="mark in marks[categories[currentCategory]]">
-                                <MapMark v-if="mark.priority < currentZoom"
+                                <MapMark v-if="mark.priority <= currentZoom"
                                     :coordinates="convertCoordinates(mark.coordinates)" :name="mark.name" />
                             </template>
                     </template>
