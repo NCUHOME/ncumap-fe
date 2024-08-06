@@ -1,0 +1,192 @@
+{
+  "教学楼": [
+    {
+      "name": "慧源楼",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    },
+    {
+      "name": "信工楼",
+      "coordinates": [115.797684, 28.658021],
+      "priority": 1
+    },
+    {
+      "name": "文法楼",
+      "coordinates": [115.804576, 28.660339],
+      "priority": 6
+    },
+    {
+      "name": "智华楼",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 6
+    },
+    {
+      "name": "理生楼",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 6
+    },
+    {
+      "name": "基础实验大楼",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 6
+    },
+    {
+      "name": "艺术楼",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 6
+    },
+    {
+      "name": "建工楼",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 6
+    },
+    {
+      "name": "外经楼",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 6
+    },
+    {
+      "name": "环境楼",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 6
+    }
+  ],
+  "体育场所": [
+    {
+      "name": "体育馆",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    },
+    {
+      "name": "羽毛球/网球馆",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    },
+    {
+      "name": "游泳馆",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    },
+    {
+      "name": "白帆运动场",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    },
+    {
+      "name": "修贤运动场​",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    },
+    {
+      "name": "天健运动场",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    }
+  ],
+  "生活": [
+    {
+      "name": "校医院​",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    },
+    {
+      "name": "修贤快递点​",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    },
+    {
+      "name": "天健快递点​",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    },
+    {
+      "name": "一二食堂​",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    },
+    {
+      "name": "三四食堂​",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    },
+    {
+      "name": "六七食堂​",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    },
+    {
+      "name": "九十食堂​",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    },
+    {
+      "name": "修贤宿舍​",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    },
+    {
+      "name": "天健宿舍​",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    },
+    {
+      "name": "慧源宿舍​",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    }
+  ],
+  "自然景观": [
+    {
+      "name": "先骕园​",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    },
+    {
+      "name": "孔雀园​",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    },
+    {
+      "name": "正气广场​",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    },
+    {
+      "name": "树人广场​",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    }
+  ],
+  "其他": [
+    {
+      "name": "图书馆​",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    },
+    {
+      "name": "音乐厅​",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    },
+    {
+      "name": "一号门​",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    },
+    {
+      "name": "二号门​",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    },
+    {
+      "name": "三号门​",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    },
+    {
+      "name": "四号门​",
+      "coordinates": [115.804362, 28.663298],
+      "priority": 1
+    }
+  ]
+}
