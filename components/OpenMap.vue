@@ -72,10 +72,13 @@ const convertCoordinates = (coordinates: number[]) => {
 }
 
 const marks = ref<any>(null)
+const categories = ref(['全部', '活动'])
+const currentCategory = ref(0)
 
 onMounted(async () => {
     try {
         marks.value = await $fetch('/data.json')
+        categories.value.push(...Object.keys(marks.value))
     } catch (err) {
         alert(err)
     }
@@ -83,7 +86,9 @@ onMounted(async () => {
 
 defineExpose({
     currentZoom,
-    currentCenter
+    currentCenter,
+    categories,
+    currentCategory
 })
 </script>
 
@@ -104,9 +109,19 @@ defineExpose({
         <ol-vector-layer>
             <ol-source-vector>
                 <template v-if="marks != null">
-                    <template v-for="mark in marks.教学楼">
-                        <MapMark v-if="mark.priority < currentZoom" :coordinates="convertCoordinates(mark.coordinates)"
-                            :name="mark.name" />
+                    <template v-if="currentCategory == 0">
+                        <template v-for="category in categories">
+                            <template v-for="mark in marks[category]">
+                                <MapMark v-if="mark.priority < currentZoom"
+                                    :coordinates="convertCoordinates(mark.coordinates)" :name="mark.name" />
+                            </template>
+                        </template>
+                    </template>
+                    <template v-else>
+                        <template v-for="mark in marks[categories[currentCategory]]">
+                                <MapMark v-if="mark.priority < currentZoom"
+                                    :coordinates="convertCoordinates(mark.coordinates)" :name="mark.name" />
+                            </template>
                     </template>
                 </template>
             </ol-source-vector>

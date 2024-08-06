@@ -1,5 +1,7 @@
 <template>
-    <div style="height: 100vh;">
-        <slot />
-    </div>
+    <v-app>
+        <v-main>
+            <slot />
+        </v-main>
+    </v-app>
 </template>
