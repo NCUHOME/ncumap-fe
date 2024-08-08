@@ -1,8 +1,8 @@
 <template>
-    <v-tabs v-model="map.currentCategory" bg-color="primary" grow center-active @update:model-value="showBottomSheet"
-        v-if="map != null" style="position: absolute;z-index: 9999;width: 100%;">
-        <v-tab v-for="(category, index) in map.categories" :value="index">{{ category }}</v-tab>
-    </v-tabs>
+    <a-tabs v-model:activeKey="map.currentCategory" v-if="map != null"
+        style="position: absolute;z-index: 9999;background-color: white;width: 100%;" @tab-click="showBottomSheet">
+        <a-tab-pane v-for="(category, index) in map.categories" :key="index" :tab="category"></a-tab-pane>
+    </a-tabs>
     <div class="map-view" :class="{ 'half': isCategoriesSheetShow }">
         <ClientOnly>
             <OpenMap ref="map" :x="location.x" :y="location.y" />
@@ -10,13 +10,20 @@
         </ClientOnly>
     </div>
     <v-bottom-sheet v-model="isCategoriesSheetShow" :opacity="0" contained height="50vh">
-        <v-card variant="flat" min-height="50vh">
+        <v-card height="100%">
             <v-list :items="map.marks[map.categories[map.currentCategory]]" item-title="name" item-value="id"
                 v-model:selected="bottomSheetSelected" @click:select="bottomSheetSelect">
                 <v-list-item v-for="(item, index) in map.marks[map.categories[map.currentCategory]]" :key="index"
-                    :title="item.name" :active="index === bottomSheetSelected"
-                    @click="bottomSheetSelect(index)"></v-list-item>
+                    :title="item.name" :active="index === bottomSheetSelected" @click="bottomSheetSelect(index)"
+                    rounded="xl"></v-list-item>
             </v-list>
+            <v-main>
+                进入漫游指北了解更多
+            </v-main>
+            <v-card-actions style="display: flex;flex-direction: row;justify-content: space-around;">
+                <a-button type="primary" :disabled="bottomSheetSelected == -1">Primary Button</a-button>
+                <a-button>Default Button</a-button>
+            </v-card-actions>
         </v-card>
     </v-bottom-sheet>
     <div class="overlay" v-if="map != null">
@@ -55,7 +62,7 @@ const location = ref({
 const bottomSheetSelected = ref(0)
 const isCategoriesSheetShow = ref(false)
 const showBottomSheet = (currentCategory) => {
-    bottomSheetSelected.value = 0
+    bottomSheetSelected.value = -1
     if (currentCategory == 0) {
         isCategoriesSheetShow.value = false
     }
@@ -113,5 +120,9 @@ if (route.query.x && route.query.y) {
 
 .half {
     height: 50vh;
+}
+
+::v-deep(.ant-tabs-nav) {
+    margin: 0 !important;
 }
 </style>

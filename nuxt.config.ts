@@ -8,5 +8,5 @@ export default defineNuxtConfig({
     port: 3000,
   },
 
-  modules: ["vuetify-nuxt-module"]
+  modules: ["vuetify-nuxt-module", "@ant-design-vue/nuxt"]
 })

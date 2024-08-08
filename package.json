@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@ant-design-vue/nuxt": "^1.4.2",
     "nuxt": "^3.12.4",
     "vue": "latest",
     "vue3-openlayers": "^10.0.2",
