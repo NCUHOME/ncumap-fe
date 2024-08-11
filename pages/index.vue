@@ -6,34 +6,36 @@
     <div class="map-view" :class="{ 'half': isCategoriesSheetShow }">
         <ClientOnly>
             <OpenMap ref="map" :x="location.x" :y="location.y" />
-            <template #fallback> Loading map... </template>
+            <template #fallback> 加载中... </template>
         </ClientOnly>
     </div>
     <v-bottom-sheet v-model="isCategoriesSheetShow" :opacity="0" contained height="50vh">
-        <v-card height="100%">
+        <v-card height="100%" style="display: flex;flex-direction: column;justify-content: space-between;">
             <v-list :items="map.marks[map.categories[map.currentCategory]]" item-title="name" item-value="id"
                 v-model:selected="bottomSheetSelected" @click:select="bottomSheetSelect">
                 <v-list-item v-for="(item, index) in map.marks[map.categories[map.currentCategory]]" :key="index"
                     :active="index === bottomSheetSelected" @click="bottomSheetSelect(index)" rounded="lg"
-                    :border="index === bottomSheetSelected ? 'md' : false"
-                    color="blue"
-                    style="padding: 10px;">
+                    :border="index === bottomSheetSelected ? 'md' : false" color="blue" style="padding: 10px;">
                     <v-list-item-title>
                         <div style="display: flex;flex-direction: row;justify-content: space-between;">
-                            <span>{{ item.name }}</span>
+                            <span style="font-size: 21px;">{{ item.name }}</span>
                             <img v-if="index === bottomSheetSelected" width="auto" src="/flag.svg">
                         </div>
                     </v-list-item-title>
-                    <v-list-item-subtitle>
+                    <v-list-item-subtitle style="color: #3A5A8A;font-size: 13px;">
                         {{ item.info }}
                     </v-list-item-subtitle>
                 </v-list-item>
 
-                <v-list-item title="进入漫游指北了解更多"></v-list-item>
+                <v-list-item
+                    style="display: flex;flex-direction: column;align-items: center;font-size: 13px;color: #8F9DB2;"
+                    title="进入漫游指北了解更多"></v-list-item>
             </v-list>
+
             <v-card-actions style="display: flex;flex-direction: row;justify-content: space-around;">
                 <a-button block @click="isCategoriesSheetShow = false">取消</a-button>
-                <a-button block type="primary" :disabled="bottomSheetSelected == -1">确认</a-button>
+                <a-button block type="primary" :disabled="bottomSheetSelected == -1"
+                    :href="`/${map.categories[map.currentCategory]}/${bottomSheetSelected}`">确认</a-button>
             </v-card-actions>
         </v-card>
     </v-bottom-sheet>
