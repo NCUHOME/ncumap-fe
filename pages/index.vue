@@ -14,31 +14,48 @@
             <v-list :items="map.marks[map.categories[map.currentCategory]]" item-title="name" item-value="id"
                 v-model:selected="bottomSheetSelected" @click:select="bottomSheetSelect">
                 <v-list-item v-for="(item, index) in map.marks[map.categories[map.currentCategory]]" :key="index"
-                    :title="item.name" :active="index === bottomSheetSelected" @click="bottomSheetSelect(index)"
-                    rounded="xl"></v-list-item>
+                    :active="index === bottomSheetSelected" @click="bottomSheetSelect(index)" rounded="lg"
+                    :border="index === bottomSheetSelected ? 'md' : false"
+                    color="blue"
+                    style="padding: 10px;">
+                    <v-list-item-title>
+                        <div style="display: flex;flex-direction: row;justify-content: space-between;">
+                            <span>{{ item.name }}</span>
+                            <img v-if="index === bottomSheetSelected" width="auto" src="/flag.svg">
+                        </div>
+                    </v-list-item-title>
+                    <v-list-item-subtitle>
+                        {{ item.info }}
+                    </v-list-item-subtitle>
+                </v-list-item>
+
+                <v-list-item title="进入漫游指北了解更多"></v-list-item>
             </v-list>
-            <v-main>
-                进入漫游指北了解更多
-            </v-main>
             <v-card-actions style="display: flex;flex-direction: row;justify-content: space-around;">
-                <a-button type="primary" :disabled="bottomSheetSelected == -1">Primary Button</a-button>
-                <a-button>Default Button</a-button>
+                <a-button block @click="isCategoriesSheetShow = false">取消</a-button>
+                <a-button block type="primary" :disabled="bottomSheetSelected == -1">确认</a-button>
             </v-card-actions>
         </v-card>
     </v-bottom-sheet>
     <div class="overlay" v-if="map != null">
         <div class="actions">
             <div>
-                <v-btn :rounded="0">
-                    <v-img width="auto" src="/icons/新生手册.svg" />
+                <v-btn :rounded="0" stacked flat min-width="0" width="44px" height="50px" style="padding: 0;">
+                    <img src="/icons/新生手册.svg" />
+                    手册
                 </v-btn>
-                <p>新生手册</p>
             </div>
             <div>
-                <v-btn :rounded="0">
-                    <v-img width="auto" src="/icons/校车.svg" />
+                <v-btn :rounded="0" stacked flat min-width="0" width="44px" height="50px" style="padding: 0;">
+                    <img src="/icons/校车.svg" />
+                    校车
                 </v-btn>
-                <p>校车</p>
+            </div>
+            <div>
+                <v-btn :rounded="0" stacked flat min-width="0" width="44px" height="50px" style="padding: 0;">
+                    <img src="/icons/定位.svg" />
+                    定位
+                </v-btn>
             </div>
         </div>
         <p>{{ map.currentZoom }}</p>
@@ -74,7 +91,8 @@ const bottomSheetSelect = (index) => {
     bottomSheetSelected.value = index
     if (bottomSheetSelected.value.length != 0) {
         map.value.viewTo(map.value.marks[map.value.categories[map.value.currentCategory]][bottomSheetSelected.value].coordinates)
-        map.value.zoomTo(3)
+        const markZoom = map.value.marks[map.value.categories[map.value.currentCategory]][bottomSheetSelected.value].priority
+        map.value.zoomTo(3 > markZoom ? 3 : markZoom)
     }
 }
 
@@ -85,17 +103,13 @@ if (route.query.x && route.query.y) {
 </script>
 
 <style scoped>
-.v-btn {
-    min-width: 0;
-    padding: 0;
-}
-
-.v-btn.v-btn--density-default {
-    height: fit-content;
-}
-
 .actions {
     margin-top: 100px;
+    background-color: white;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius: 15px;
+    margin-right: 10px;
 }
 
 .actions div {
@@ -124,5 +138,10 @@ if (route.query.x && route.query.y) {
 
 ::v-deep(.ant-tabs-nav) {
     margin: 0 !important;
+}
+
+.ant-btn {
+    margin: 5px;
+    padding: 5px;
 }
 </style>
