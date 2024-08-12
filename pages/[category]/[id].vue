@@ -7,7 +7,7 @@ const currentBuilding = ref<any>(null)
 
 onMounted(async () => {
     try {
-        buildings.value = await $fetch('/data.json')
+        buildings.value = await $fetch(`/data/buildings/${category}/data.json`)
         currentBuilding.value = buildings.value[category][id]
     } catch (err) {
         alert(err)

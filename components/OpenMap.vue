@@ -39,12 +39,13 @@ const selectConditions = inject("ol-selectconditions");
 
 const selectCondition = selectConditions.singleClick;
 
+const router = useRouter()
 const featureSelected = (event: ObjectEvent) => {
     const selectedFeatures = event.target.getFeatures();
     selectedFeatures.forEach((feature: any) => {
         const coordinates = feature.getGeometry().getCoordinates();
         view.value?.setCenter(coordinates)
-        console.log('选中的标记位置:', coordinates);
+        router.push(`/${feature.values_.category}/${feature.values_.id}`)
     })
 };
 
@@ -55,7 +56,7 @@ const selectInteactionFilter = (feature: any) => {
 const overrideStyleFunction = (feature: Feature, style: Style) => {
     style.setImage(new Icon({
         src: `/${feature.getProperties().name}.svg`,
-        scale: 1.3,
+        scale: 1.0,
         anchor: [0.5, 1]
     }))
     return style
@@ -78,7 +79,7 @@ const currentCategory = ref(0)
 
 onMounted(async () => {
     try {
-        marks.value = await $fetch('/data.json')
+        marks.value = await $fetch('/data/marks/data.json')
         categories.value.push(...Object.keys(marks.value))
     } catch (err) {
         alert(err)
@@ -125,15 +126,17 @@ defineExpose({
                         <template v-for="category in categories">
                             <template v-for="mark in marks[category]">
                                 <MapMark v-if="mark.priority <= currentZoom"
-                                    :coordinates="convertCoordinates(mark.coordinates)" :name="mark.name" />
+                                    :coordinates="convertCoordinates(mark.coordinates)" :name="mark.name"
+                                    :category="category" :id="mark.id" />
                             </template>
                         </template>
                     </template>
                     <template v-else>
                         <template v-for="mark in marks[categories[currentCategory]]">
-                                <MapMark v-if="mark.priority <= currentZoom"
-                                    :coordinates="convertCoordinates(mark.coordinates)" :name="mark.name" />
-                            </template>
+                            <MapMark v-if="mark.priority <= currentZoom"
+                                :coordinates="convertCoordinates(mark.coordinates)" :name="mark.name"
+                                :category="categories[currentCategory]" :id="mark.id" />
+                        </template>
                     </template>
                 </template>
             </ol-source-vector>

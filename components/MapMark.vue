@@ -2,10 +2,14 @@
 const props = defineProps<{
     name: string,
     coordinates: (number | undefined)[],
+    category: string,
+    id: number
 }>()
 
 const properties = ref({
-    name: '餐厅'
+    name: '餐厅',
+    category: props.category,
+    id: props.id
 })
 </script>
 

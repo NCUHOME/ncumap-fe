@@ -15,7 +15,8 @@
                 v-model:selected="bottomSheetSelected" @click:select="bottomSheetSelect">
                 <v-list-item v-for="(item, index) in map.marks[map.categories[map.currentCategory]]" :key="index"
                     :active="index === bottomSheetSelected" @click="bottomSheetSelect(index)" rounded="lg"
-                    :border="index === bottomSheetSelected ? 'md' : false" color="blue" style="padding: 10px;">
+                    :border="index === bottomSheetSelected ? 'md' : false"
+                    style="padding: 10px;border-color: #164CD7 !important;">
                     <v-list-item-title>
                         <div style="display: flex;flex-direction: row;justify-content: space-between;">
                             <span style="font-size: 21px;">{{ item.name }}</span>
@@ -34,7 +35,8 @@
 
             <v-card-actions style="display: flex;flex-direction: row;justify-content: space-around;">
                 <a-button block @click="isCategoriesSheetShow = false">取消</a-button>
-                <a-button block type="primary" @click="$router.push(`/${map.categories[map.currentCategory]}/${bottomSheetSelected}`)"
+                <a-button block type="primary"
+                    @click="$router.push(`/${map.categories[map.currentCategory]}/${bottomSheetSelected}`)"
                     :disabled="bottomSheetSelected == -1">确认</a-button>
             </v-card-actions>
         </v-card>
@@ -144,6 +146,11 @@ if (route.query.x && route.query.y) {
 
 .ant-btn {
     margin: 5px;
-    padding: 5px;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
 }
 </style>
