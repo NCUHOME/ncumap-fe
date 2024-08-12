@@ -50,7 +50,8 @@
                 </v-btn>
             </div>
             <div>
-                <v-btn :rounded="0" stacked flat min-width="0" width="44px" height="50px" style="padding: 0;">
+                <v-btn :rounded="0" stacked flat min-width="0" width="44px" height="50px" style="padding: 0;"
+                    @click="schoolCarDialog = true">
                     <img src="/icons/校车.svg" />
                     校车
                 </v-btn>
@@ -62,11 +63,16 @@
                 </v-btn>
             </div>
         </div>
-        <p>{{ map.currentZoom }}</p>
-        <p>{{ map.currentCenter }}</p>
-        <p>{{ map.categories }}</p>
-        <p>{{ map.currentCategory }}</p>
     </div>
+    <v-dialog v-model="schoolCarDialog" width="auto">
+        <v-card>
+            <v-btn icon width="45px" height="45px" color="rgba(255,255,255,0)"
+                style="position: fixed;z-index: 9999;top: 15px;left: 15px;" variant="flat" @click="schoolCarDialog = false">
+                <v-img src="/back.svg" width="auto"></v-img>
+            </v-btn>
+            <v-img src="/schoolCar.svg" width="auto"></v-img>
+        </v-card>
+    </v-dialog>
 </template>
 
 <script setup>
@@ -82,6 +88,7 @@ const location = ref({
 
 const bottomSheetSelected = ref(0)
 const isCategoriesSheetShow = ref(false)
+const schoolCarDialog = ref(false)
 const showBottomSheet = (currentCategory) => {
     bottomSheetSelected.value = -1
     if (currentCategory == 0) {
@@ -152,5 +159,7 @@ if (route.query.x && route.query.y) {
     align-items: center;
     justify-content: center;
     font-size: 18px;
+    border-radius: 10px;
+    border: 0;
 }
 </style>

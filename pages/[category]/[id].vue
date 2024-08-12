@@ -16,13 +16,10 @@ onMounted(async () => {
 </script>
 
 <template>
-    <v-btn icon width="45px" height="45px" color="rgba(255,255,255,0)"
-        style="position: fixed;z-index: 9999;top: 40px;left: 19px;" variant="flat" @click="$router.back()">
-        <v-img src="/back.svg" width="auto"></v-img>
-    </v-btn>
+    <BackButton></BackButton>
     <v-card v-if="currentBuilding != null" variant="flat" color="#F2F8FA" min-height="100vh">
         <v-img gradient="to top, #F2F8FA 0, transparent 50%, transparent 50%" class="align-end" height="296"
-            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg" cover>
+            :src="currentBuilding.img ? currentBuilding.img : '/map-cut.png'" cover>
             <v-card-title style="font-size: 32px;color: #164CD7;">{{ currentBuilding.name }}</v-card-title>
         </v-img>
         <v-card-text style="color: #3A5A8A;">
