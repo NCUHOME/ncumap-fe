@@ -34,8 +34,8 @@
 
             <v-card-actions style="display: flex;flex-direction: row;justify-content: space-around;">
                 <a-button block @click="isCategoriesSheetShow = false">取消</a-button>
-                <a-button block type="primary" :disabled="bottomSheetSelected == -1"
-                    :href="`/${map.categories[map.currentCategory]}/${bottomSheetSelected}`">确认</a-button>
+                <a-button block type="primary" @click="$router.push(`/${map.categories[map.currentCategory]}/${bottomSheetSelected}`)"
+                    :disabled="bottomSheetSelected == -1">确认</a-button>
             </v-card-actions>
         </v-card>
     </v-bottom-sheet>
