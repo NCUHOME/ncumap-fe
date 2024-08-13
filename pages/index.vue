@@ -9,7 +9,8 @@
         <ClientOnly>
             <OpenMap ref="map" :x="location.x" :y="location.y" />
             <template #fallback>
-                <div style="height: 100%;width: 100%;display: flex;align-items: center;justify-content: center;flex-direction: column;">
+                <div
+                    style="height: 100%;width: 100%;display: flex;align-items: center;justify-content: center;flex-direction: column;">
                     <v-progress-circular indeterminate></v-progress-circular>
                     <p>加载地图中</p>
                 </div>
@@ -37,8 +38,11 @@
                 </v-list-item>
 
                 <v-list-item
-                    style="display: flex;flex-direction: column;align-items: center;font-size: 13px;color: #8F9DB2;"
-                    title="进入漫游指北了解更多"></v-list-item>
+                    style="display: flex;flex-direction: column;align-items: center;font-size: 13px;color: #8F9DB2;">
+                    <v-list-item-title>
+                        进入<a href="./">漫游指北</a>了解更多
+                    </v-list-item-title>
+                </v-list-item>
             </v-list>
 
             <v-card-actions style="display: flex;flex-direction: row;justify-content: space-around;">
@@ -71,8 +75,10 @@
                     </v-list-group>
                 </template>
                 <v-list-item
-                    style="display: flex;flex-direction: column;align-items: center;font-size: 13px;color: #8F9DB2;"
-                    title="进入漫游指北了解更多"></v-list-item>
+                    style="display: flex;flex-direction: column;align-items: center;font-size: 13px;color: #8F9DB2;">
+                    <v-list-item-title>
+                        进入<a href="./">漫游指北</a>了解更多
+                    </v-list-item-title></v-list-item>
             </v-list>
             <v-card-actions style="display: flex;flex-direction: row;justify-content: space-around;">
                 <a-button block @click="isManualShow = false" style="background-color: #F3F6F7;">取消</a-button>
@@ -137,7 +143,7 @@ const schoolCarDialog = ref(false)
 const isManualShow = ref(false)
 const manualData = ref(null)
 
-onMounted(async() => {
+onMounted(async () => {
     try {
         manualData.value = await $fetch('/data/manual/data.json')
     } catch (err) {

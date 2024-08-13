@@ -116,6 +116,9 @@ onMounted(async () => {
         <v-card class="content-card" variant="flat" v-if="currentBuilding.imgs.length > 0">
             <v-img v-for="img in currentBuilding.imgs" :src="img" style="margin: 10px;" />
         </v-card>
+        <v-card-text style="display: flex;flex-direction: row;align-items: center;justify-content: center;">
+            信息有误？<a href="incu://Webview?url=https://feedback.ncuos.com">反馈</a>
+        </v-card-text>
     </v-card>
 </template>
 
