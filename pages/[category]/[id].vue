@@ -44,10 +44,13 @@ onMounted(async () => {
                 </template>
                 <v-card-title style="color: #123871;">基本职能</v-card-title>
             </v-card-item>
-            <v-card-text>
+            <v-card-text v-if="currentBuilding.functions.length > 0">
                 <p v-for="f in currentBuilding.functions">
                     {{ f }}
                 </p>
+            </v-card-text>
+            <v-card-text v-else>
+                暂无
             </v-card-text>
             <v-card v-for="tip in currentBuilding.tips.functions">
                 <v-card-title>
@@ -97,10 +100,13 @@ onMounted(async () => {
                 </template>
                 <v-card-title style="color: #123871;">其他</v-card-title>
             </v-card-item>
-            <v-card-text>
+            <v-card-text v-if="currentBuilding.activities.length > 0">
                 <p v-for="f in currentBuilding.activities">
                     {{ f }}
                 </p>
+            </v-card-text>
+            <v-card-text v-else>
+                暂无
             </v-card-text>
             <v-card v-for="tip in currentBuilding.tips.activities">
                 <v-card-title>
@@ -115,6 +121,9 @@ onMounted(async () => {
                 </v-card-text>
             </v-card>
         </v-card>
+        <v-card class="content-card" variant="flat" v-if="currentBuilding.imgs.length > 0">
+            <v-img v-for="img in currentBuilding.imgs" :src="img" style="margin: 10px;" />
+        </v-card>
     </v-card>
 </template>
 
@@ -122,6 +131,7 @@ onMounted(async () => {
 p {
     margin-top: 10px;
 }
+
 .content-card {
     margin: 10px;
 }

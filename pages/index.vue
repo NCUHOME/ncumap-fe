@@ -34,9 +34,41 @@
             </v-list>
 
             <v-card-actions style="display: flex;flex-direction: row;justify-content: space-around;">
-                <a-button block @click="isCategoriesSheetShow = false">取消</a-button>
+                <a-button block @click="isCategoriesSheetShow = false" style="background-color: #F3F6F7;">取消</a-button>
                 <a-button block type="primary"
                     @click="$router.push(`/${map.categories[map.currentCategory]}/${bottomSheetSelected}`)"
+                    :disabled="bottomSheetSelected == -1">确认</a-button>
+            </v-card-actions>
+        </v-card>
+    </v-bottom-sheet>
+    <v-bottom-sheet v-if="map != null" v-model="isManualShow" :opacity="0" contained height="50vh">
+        <v-card height="100%" style="display: flex;flex-direction: column;justify-content: space-between;">
+            <v-list open-strategy="single" @click:open="bottomSheetSelected = -1">
+                <template v-for="(category, index) in Object.keys(manualData)" :key="index">
+                    <v-list-group v-if="manualData[category]">
+                        <template v-slot:activator="{ props }">
+                            <v-list-item v-bind="props" :title="category"></v-list-item>
+                        </template>
+                        <v-list-item v-for="(item, itemIndex) in manualData[category]" :key="itemIndex"
+                            :active="itemIndex === bottomSheetSelected" @click="manualSelect(itemIndex, index)"
+                            rounded="lg" :border="itemIndex === bottomSheetSelected ? 'md' : false"
+                            style="padding: 10px;border-color: #164CD7 !important;">
+                            <v-list-item-title>
+                                <div style="display: flex;flex-direction: row;justify-content: space-between;">
+                                    <span style="font-size: 21px;">{{ item.name }}</span>
+                                    <img v-if="itemIndex === bottomSheetSelected" width="auto" src="/flag.svg">
+                                </div>
+                            </v-list-item-title>
+                        </v-list-item>
+                    </v-list-group>
+                </template>
+                <v-list-item
+                    style="display: flex;flex-direction: column;align-items: center;font-size: 13px;color: #8F9DB2;"
+                    title="进入漫游指北了解更多"></v-list-item>
+            </v-list>
+            <v-card-actions style="display: flex;flex-direction: row;justify-content: space-around;">
+                <a-button block @click="isManualShow = false" style="background-color: #F3F6F7;">取消</a-button>
+                <a-button block type="primary" @click="manualRedirect"
                     :disabled="bottomSheetSelected == -1">确认</a-button>
             </v-card-actions>
         </v-card>
@@ -44,7 +76,8 @@
     <div class="overlay" v-if="map != null">
         <div class="actions">
             <div>
-                <v-btn :rounded="0" stacked flat min-width="0" width="44px" height="50px" style="padding: 0;">
+                <v-btn :rounded="0" stacked flat min-width="0" width="44px" height="50px" style="padding: 0;"
+                    @click="showManual">
                     <img src="/icons/新生手册.svg" />
                     手册
                 </v-btn>
@@ -67,7 +100,8 @@
     <v-dialog v-model="schoolCarDialog" width="auto">
         <v-card>
             <v-btn icon width="45px" height="45px" color="rgba(255,255,255,0)"
-                style="position: fixed;z-index: 9999;top: 15px;left: 15px;" variant="flat" @click="schoolCarDialog = false">
+                style="position: fixed;z-index: 9999;top: 15px;left: 15px;" variant="flat"
+                @click="schoolCarDialog = false">
                 <v-img src="/back.svg" width="auto"></v-img>
             </v-btn>
             <v-img src="/schoolCar.svg" width="auto"></v-img>
@@ -86,11 +120,25 @@ const location = ref({
     y: 100
 })
 
-const bottomSheetSelected = ref(0)
+const activeListGroup = ref(-1)
+const bottomSheetSelected = ref(-1)
 const isCategoriesSheetShow = ref(false)
 const schoolCarDialog = ref(false)
+const isManualShow = ref(false)
+const manualData = ref(null)
+
+onMounted(async() => {
+    try {
+        manualData.value = await $fetch('/data/manual/data.json')
+    } catch (err) {
+        alert(err)
+    }
+})
+
 const showBottomSheet = (currentCategory) => {
+    schoolCarDialog.value = false
     bottomSheetSelected.value = -1
+    isManualShow.value = false
     if (currentCategory == 0) {
         isCategoriesSheetShow.value = false
     }
@@ -98,13 +146,33 @@ const showBottomSheet = (currentCategory) => {
         isCategoriesSheetShow.value = true
     }
 }
+
+const showManual = () => {
+    bottomSheetSelected.value = -1
+    isCategoriesSheetShow.value = false
+    isManualShow.value = true
+}
+
 const bottomSheetSelect = (index) => {
     bottomSheetSelected.value = index
-    if (bottomSheetSelected.value.length != 0) {
-        map.value.viewTo(map.value.marks[map.value.categories[map.value.currentCategory]][bottomSheetSelected.value].coordinates)
-        const markZoom = map.value.marks[map.value.categories[map.value.currentCategory]][bottomSheetSelected.value].priority
-        map.value.zoomTo(3 > markZoom ? 3 : markZoom)
-    }
+    map.value.viewTo(map.value.marks[map.value.categories[map.value.currentCategory]][bottomSheetSelected.value].coordinates)
+    const markZoom = map.value.marks[map.value.categories[map.value.currentCategory]][bottomSheetSelected.value].priority
+    map.value.zoomTo(3 > markZoom ? 3 : markZoom)
+}
+
+const manualRedirect = () => {
+    const router = useRouter()
+    const current = manualData.value[Object.keys(manualData.value)[activeListGroup.value]][bottomSheetSelected.value]
+    router.push(`/${current.category}/${current.id}`)
+}
+
+const manualSelect = (itemIndex, index) => {
+    bottomSheetSelected.value = itemIndex
+    activeListGroup.value = index
+    const current = manualData.value[Object.keys(manualData.value)[activeListGroup.value]][bottomSheetSelected.value]
+    map.value.viewTo(map.value.marks[current.category][current.id].coordinates)
+    const markZoom = map.value.marks[current.category][current.id].priority
+    map.value.zoomTo(3 > markZoom ? 3 : markZoom)
 }
 
 if (route.query.x && route.query.y) {
