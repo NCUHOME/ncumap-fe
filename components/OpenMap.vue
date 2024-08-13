@@ -109,8 +109,7 @@ defineExpose({
     <ol-map :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" style="height:100%;" :controls="[]">
         <ol-view ref="view" :center="center" :rotation="rotation" :zoom="zoom" :projection="projection"
             @change:resolution="resolutionChanged" @change:center="centerChanged" :enableRotation="false" :maxZoom="6"
-            :minZoom="2" :extent="extent" />
-
+            :minZoom="2" :extent="extent" constrainOnlyCenter />
         <ol-tile-layer>
             <ol-source-xyz url="/tiles/{z}/tile_{x}_{y}.png" :projection="projection" />
         </ol-tile-layer>
