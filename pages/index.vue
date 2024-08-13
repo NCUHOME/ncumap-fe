@@ -60,7 +60,12 @@
                 <template v-for="(category, index) in Object.keys(manualData)" :key="index">
                     <v-list-group v-if="manualData[category]" style="color: #476491;font-size: 13px;">
                         <template v-slot:activator="{ props }">
-                            <v-list-item v-bind="props" :title="category"></v-list-item>
+                            <v-list-item v-bind="props" :title="category">
+                                <template v-slot:append="{ isActive }">
+                                    <img v-if="isActive" src="/up.svg" />
+                                    <img v-else src="/down.svg" />
+                                </template>
+                            </v-list-item>
                         </template>
                         <v-list-item v-for="(item, itemIndex) in manualData[category]" :key="itemIndex"
                             :active="itemIndex === bottomSheetSelected" @click="manualSelect(itemIndex, index)"
