@@ -338,6 +338,22 @@
         "offices": [],
         "activities": []
       }
+    },
+    {
+      "name": "研究生宿舍二十八至三十栋",
+      "id": 18,
+      "info": "",
+      "functions": [],
+      "offices": [],
+      "activities": [],
+      "imgs":[],
+      "cover": null,
+      "tips": {
+        "info": [],
+        "functions": [],
+        "offices": [],
+        "activities": []
+      }
     }
   ]
 }
