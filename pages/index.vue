@@ -121,8 +121,8 @@ import { ref } from 'vue';
 const route = useRoute()
 const map = ref(null)
 const location = ref({
-    x: 100,
-    y: 100
+    x: 115.804362,
+    y: 28.663298
 })
 
 const activeListGroup = ref(-1)

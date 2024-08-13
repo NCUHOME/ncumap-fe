@@ -4,13 +4,24 @@ import type { ObjectEvent } from "ol/Object";
 import type { View, Feature } from "ol";
 import { Style, Icon } from 'ol/style';
 
+const convertCoordinates = (coordinates: number[]) => {
+    const top = 28.667821
+    const bottom = 28.64195
+    const right = 115.814312
+    const left = 115.789364
+    const blank = 27.8
+    const unitY = (top - bottom) / 256
+    const unitX = (right - left) / (228 - blank)
+    return [(coordinates[0] - left) / unitX + blank, (coordinates[1] - bottom) / unitY]
+}
+
 const props = defineProps({
     x: Number,
     y: Number
 })
 
 const size = ref([256, 256]);
-const center = ref([props.x, props.y]);
+const center = ref(convertCoordinates([<number>props.x, <number>props.y]));
 const extent = ref([0, 0, ...size.value]);
 
 const projection = ref({
@@ -60,17 +71,6 @@ const overrideStyleFunction = (feature: Feature, style: Style) => {
         anchor: [0.5, 1]
     }))
     return style
-}
-
-const convertCoordinates = (coordinates: number[]) => {
-    const top = 28.667821
-    const bottom = 28.64195
-    const right = 115.814312
-    const left = 115.789364
-    const blank = 27.8
-    const unitY = (top - bottom) / 256
-    const unitX = (right - left) / (228 - blank)
-    return [(coordinates[0] - left) / unitX + blank, (coordinates[1] - bottom) / unitY]
 }
 
 const marks = ref<any>(null)
