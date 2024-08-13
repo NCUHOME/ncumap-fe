@@ -20,6 +20,11 @@ onMounted(async () => {
     <v-card v-if="currentBuilding != null" variant="flat" color="#F2F8FA" min-height="100vh">
         <v-img gradient="to top, #F2F8FA 0, transparent 50%, transparent 50%" class="align-end" height="296"
             :src="currentBuilding.cover ? currentBuilding.cover : '/map-cut.png'" cover>
+            <template v-slot:placeholder>
+                <div class="d-flex align-center justify-center fill-height">
+                    <v-progress-circular color="grey-lighten-4" indeterminate></v-progress-circular>
+                </div>
+            </template>
             <v-card-title style="font-size: 32px;color: #164CD7;">{{ currentBuilding.name }}</v-card-title>
         </v-img>
         <v-card-text style="color: #3A5A8A;">
