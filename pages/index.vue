@@ -203,8 +203,8 @@ const manualSelect = (itemIndex, index) => {
 }
 
 if (route.query.x && route.query.y) {
-    location.value.x = parseInt(route.query.x);
-    location.value.y = parseInt(route.query.y);
+    location.value.x = parseFloat(route.query.x);
+    location.value.y = parseFloat(route.query.y);
 }
 </script>
 
