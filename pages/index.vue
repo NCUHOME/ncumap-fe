@@ -1,14 +1,17 @@
 <template>
+    <!-- 上方选项卡 -->
     <a-tabs v-model:activeKey="map.currentCategory" v-if="map != null"
         style="position: absolute;z-index: 9999;background-color: white;width: 100%;" @tab-click="showBottomSheet">
         <a-tab-pane v-for="(category, index) in map.categories" :key="index" :tab="category"></a-tab-pane>
     </a-tabs>
+    <!-- 主地图 -->
     <div class="map-view" :class="{ 'half': isCategoriesSheetShow }">
         <ClientOnly>
             <OpenMap ref="map" :x="location.x" :y="location.y" />
             <template #fallback> 加载中... </template>
         </ClientOnly>
     </div>
+    <!-- 建筑选择菜单 -->
     <v-bottom-sheet v-model="isCategoriesSheetShow" :opacity="0" contained height="50vh">
         <v-card height="100%" style="display: flex;flex-direction: column;justify-content: space-between;">
             <v-list :items="map.marks[map.categories[map.currentCategory]]" item-title="name" item-value="id"
@@ -41,11 +44,12 @@
             </v-card-actions>
         </v-card>
     </v-bottom-sheet>
+    <!-- 新生手册 -->
     <v-bottom-sheet v-if="map != null" v-model="isManualShow" :opacity="0" contained height="50vh">
         <v-card height="100%" style="display: flex;flex-direction: column;justify-content: space-between;">
             <v-list open-strategy="single" @click:open="bottomSheetSelected = -1">
                 <template v-for="(category, index) in Object.keys(manualData)" :key="index">
-                    <v-list-group v-if="manualData[category]">
+                    <v-list-group v-if="manualData[category]" style="color: #476491;font-size: 13px;">
                         <template v-slot:activator="{ props }">
                             <v-list-item v-bind="props" :title="category"></v-list-item>
                         </template>
@@ -55,8 +59,7 @@
                             style="padding: 10px;border-color: #164CD7 !important;">
                             <v-list-item-title>
                                 <div style="display: flex;flex-direction: row;justify-content: space-between;">
-                                    <span style="font-size: 21px;">{{ item.name }}</span>
-                                    <img v-if="itemIndex === bottomSheetSelected" width="auto" src="/flag.svg">
+                                    <span style="font-size: 15px;color: black;">{{ item.name }}</span>
                                 </div>
                             </v-list-item-title>
                         </v-list-item>
@@ -73,6 +76,7 @@
             </v-card-actions>
         </v-card>
     </v-bottom-sheet>
+    <!-- 右侧按钮 -->
     <div class="overlay" v-if="map != null">
         <div class="actions">
             <div>
@@ -97,6 +101,7 @@
             </div>
         </div>
     </div>
+    <!-- 校车 -->
     <v-dialog v-model="schoolCarDialog" width="auto">
         <v-card>
             <v-btn icon width="45px" height="45px" color="rgba(255,255,255,0)"
