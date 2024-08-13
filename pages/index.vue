@@ -8,7 +8,12 @@
     <div class="map-view" :class="{ 'half': isCategoriesSheetShow }">
         <ClientOnly>
             <OpenMap ref="map" :x="location.x" :y="location.y" />
-            <template #fallback> 加载中... </template>
+            <template #fallback>
+                <div style="height: 100%;width: 100%;display: flex;align-items: center;justify-content: center;flex-direction: column;">
+                    <v-progress-circular indeterminate></v-progress-circular>
+                    <p>加载地图中</p>
+                </div>
+            </template>
         </ClientOnly>
     </div>
     <!-- 建筑选择菜单 -->
