@@ -115,7 +115,9 @@ defineExpose({
     currentCategory,
     marks,
     viewTo,
-    zoomTo
+    zoomTo,
+    centerX,
+    centerY
 })
 </script>
 
