@@ -139,6 +139,12 @@ defineExpose({
                         </template>
                     </template>
                 </template>
+                <ol-feature>
+                    <ol-geom-point :coordinates="convertCoordinates([<number>props.x, <number>props.y])"></ol-geom-point>
+                    <ol-style>
+                        <ol-style-icon src="/餐厅.svg" :anchor="[0.5, 1]"></ol-style-icon>
+                    </ol-style>
+                </ol-feature>
             </ol-source-vector>
         </ol-vector-layer>
     </ol-map>
