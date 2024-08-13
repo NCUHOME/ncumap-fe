@@ -20,8 +20,22 @@ const props = defineProps({
     y: Number
 })
 
+let [centerX, centerY] = convertCoordinates([<number>props.x, <number>props.y])
+
+if (centerX > 256) {
+    centerX = 256
+} else if(centerX < 0) {
+    centerX = 0
+}
+
+if (centerY > 256) {
+    centerY = 256
+} else if(centerY < 0) {
+    centerY = 0
+}
+
 const size = ref([256, 256]);
-const center = ref(convertCoordinates([<number>props.x, <number>props.y]));
+const center = ref([centerX, centerY]);
 const extent = ref([0, 0, ...size.value]);
 
 const projection = ref({
@@ -139,7 +153,7 @@ defineExpose({
                     </template>
                 </template>
                 <ol-feature>
-                    <ol-geom-point :coordinates="convertCoordinates([<number>props.x, <number>props.y])"></ol-geom-point>
+                    <ol-geom-point :coordinates="[centerX, centerY]"></ol-geom-point>
                     <ol-style>
                         <ol-style-icon src="/餐厅.svg" :anchor="[0.5, 1]"></ol-style-icon>
                     </ol-style>
