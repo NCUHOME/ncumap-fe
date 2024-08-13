@@ -164,7 +164,7 @@
       }
     },
     {
-      "name": "修贤宿舍",
+      "name": "商业街",
       "id": 7,
       "info": "",
       "functions": [],
@@ -180,7 +180,7 @@
       }
     },
     {
-      "name": "天健宿舍",
+      "name": "天健商业街",
       "id": 8,
       "info": "",
       "functions": [],
@@ -196,7 +196,7 @@
       }
     },
     {
-      "name": "慧源宿舍",
+      "name": "天健宿舍十九至二十三栋",
       "id": 9,
       "info": "",
       "functions": [],
@@ -212,7 +212,7 @@
       }
     },
     {
-      "name": "商业街",
+      "name": "天健宿舍二十四至二十七栋",
       "id": 10,
       "info": "",
       "functions": [],
@@ -228,8 +228,104 @@
       }
     },
     {
-      "name": "天健商业街",
+      "name": "修贤宿舍一至三栋",
       "id": 11,
+      "info": "",
+      "functions": [],
+      "offices": [],
+      "activities": [],
+      "imgs":[],
+      "cover": null,
+      "tips": {
+        "info": [],
+        "functions": [],
+        "offices": [],
+        "activities": []
+      }
+    },
+    {
+      "name": "修贤宿舍四栋",
+      "id": 12,
+      "info": "",
+      "functions": [],
+      "offices": [],
+      "activities": [],
+      "imgs":[],
+      "cover": null,
+      "tips": {
+        "info": [],
+        "functions": [],
+        "offices": [],
+        "activities": []
+      }
+    },
+    {
+      "name": "修贤宿舍五栋",
+      "id": 13,
+      "info": "",
+      "functions": [],
+      "offices": [],
+      "activities": [],
+      "imgs":[],
+      "cover": null,
+      "tips": {
+        "info": [],
+        "functions": [],
+        "offices": [],
+        "activities": []
+      }
+    },
+    {
+      "name": "修贤宿舍六至八栋",
+      "id": 14,
+      "info": "",
+      "functions": [],
+      "offices": [],
+      "activities": [],
+      "imgs":[],
+      "cover": null,
+      "tips": {
+        "info": [],
+        "functions": [],
+        "offices": [],
+        "activities": []
+      }
+    },
+    {
+      "name": "修贤宿舍十三至十五栋",
+      "id": 15,
+      "info": "",
+      "functions": [],
+      "offices": [],
+      "activities": [],
+      "imgs":[],
+      "cover": null,
+      "tips": {
+        "info": [],
+        "functions": [],
+        "offices": [],
+        "activities": []
+      }
+    },
+    {
+      "name": "修贤宿舍十六至十八栋",
+      "id": 16,
+      "info": "",
+      "functions": [],
+      "offices": [],
+      "activities": [],
+      "imgs":[],
+      "cover": null,
+      "tips": {
+        "info": [],
+        "functions": [],
+        "offices": [],
+        "activities": []
+      }
+    },
+    {
+      "name": "修贤宿舍九至十二栋",
+      "id": 17,
       "info": "",
       "functions": [],
       "offices": [],
