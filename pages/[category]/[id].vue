@@ -19,7 +19,7 @@ onMounted(async () => {
     <BackButton></BackButton>
     <v-card v-if="currentBuilding != null" variant="flat" color="#F2F8FA" min-height="100vh">
         <v-img gradient="to top, #F2F8FA 0, transparent 50%, transparent 50%" class="align-end" height="296"
-            :src="currentBuilding.img ? currentBuilding.img : '/map-cut.png'" cover>
+            :src="currentBuilding.cover ? currentBuilding.cover : '/map-cut.png'" cover>
             <v-card-title style="font-size: 32px;color: #164CD7;">{{ currentBuilding.name }}</v-card-title>
         </v-img>
         <v-card-text style="color: #3A5A8A;">
@@ -31,9 +31,7 @@ onMounted(async () => {
                     </h5>
                 </v-card-title>
                 <v-card-text>
-                    <p v-for="content in tip.content">
-                        {{ content }}
-                    </p>
+                    <p v-for="content in tip.content" v-html="content"></p>
                 </v-card-text>
             </v-card>
         </v-card-text>
@@ -59,9 +57,7 @@ onMounted(async () => {
                     </h5>
                 </v-card-title>
                 <v-card-text>
-                    <p v-for="content in tip.content">
-                        {{ content }}
-                    </p>
+                    <p v-for="content in tip.content" v-html="content"></p>
                 </v-card-text>
             </v-card>
         </v-card>
@@ -87,9 +83,7 @@ onMounted(async () => {
                     </h5>
                 </v-card-title>
                 <v-card-text>
-                    <p v-for="content in tip.content">
-                        {{ content }}
-                    </p>
+                    <p v-for="content in tip.content" v-html="content"></p>
                 </v-card-text>
             </v-card>
         </v-card>
@@ -115,9 +109,7 @@ onMounted(async () => {
                     </h5>
                 </v-card-title>
                 <v-card-text>
-                    <p v-for="content in tip.content">
-                        {{ content }}
-                    </p>
+                    <p v-for="content in tip.content" v-html="content"></p>
                 </v-card-text>
             </v-card>
         </v-card>
