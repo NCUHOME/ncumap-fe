@@ -118,7 +118,13 @@
             <v-btn icon width="45px" height="45px" color="rgba(255,255,255,0)"
                 style="position: fixed;z-index: 9999;top: 15px;left: 15px;" variant="flat"
                 @click="schoolCarDialog = false">
-                <v-img src="/back.svg" width="auto"></v-img>
+                <v-img src="/back.svg" width="auto">
+                    <template v-slot:placeholder>
+                        <div class="d-flex align-center justify-center fill-height">
+                            <v-progress-circular color="grey-lighten-4" indeterminate></v-progress-circular>
+                        </div>
+                    </template>
+                </v-img>
             </v-btn>
             <v-img src="/schoolCar.svg" width="auto"></v-img>
         </v-card>
