@@ -108,6 +108,10 @@ const zoomTo = (zoom: number) => {
     view.value?.setZoom(zoom)
 }
 
+const backToCenter = () => {
+    view.value?.setCenter([centerX, centerY])
+}
+
 defineExpose({
     currentZoom,
     currentCenter,
@@ -116,8 +120,7 @@ defineExpose({
     marks,
     viewTo,
     zoomTo,
-    centerX,
-    centerY
+    backToCenter
 })
 </script>
 
