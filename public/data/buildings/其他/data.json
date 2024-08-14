@@ -93,8 +93,24 @@
       }
     },
     {
-      "name": "五号门(嘉言路北门)",
+      "name": "四号门",
       "id": 5,
+      "info": "",
+      "functions": [],
+      "offices": [],
+      "activities": [],
+      "imgs":[],
+      "cover": null,
+      "tips": {
+        "info": [],
+        "functions": [],
+        "offices": [],
+        "activities": []
+      }
+    },
+    {
+      "name": "五号门(嘉言路北门)",
+      "id": 6,
       "info": "国际交流公寓和劳动教育基地（每个学院都有一块田地用于种菜，一般每学期按班级轮流开垦维护）旁边。此门距医学院仅一条马路。",
       "functions": [],
       "offices": [],
@@ -110,7 +126,7 @@
     },
     {
       "name": "五四大道",
-      "id": 6,
+      "id": 7,
       "info": "报到点",
       "functions": ["报到"],
       "offices": [],
