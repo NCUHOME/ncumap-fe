@@ -1,7 +1,7 @@
 <template>
     <!-- 上方选项卡 -->
     <a-tabs v-model:activeKey="map.currentCategory" v-if="map != null"
-        style="position: absolute;z-index: 9999;background-color: white;width: 100%;" @tab-click="showBottomSheet">
+        style="position: absolute;z-index: 9999;background-color: white;width: 100%;" @tab-click="showBottomSheet" @touchmove.prevent>
         <a-tab-pane v-for="(category, index) in map.categories" :key="index" :tab="category"></a-tab-pane>
     </a-tabs>
     <!-- 主地图 -->
@@ -93,7 +93,7 @@
         </v-card>
     </v-bottom-sheet>
     <!-- 右侧按钮 -->
-    <div class="overlay" v-if="map != null">
+    <div class="overlay" v-if="map != null" @touchmove.prevent>
         <div class="actions">
             <div>
                 <v-btn :rounded="0" stacked flat min-width="0" width="44px" height="50px" style="padding: 0;"
