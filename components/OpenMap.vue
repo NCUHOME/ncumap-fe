@@ -6,7 +6,7 @@ import { Style, Icon } from 'ol/style';
 
 const convertCoordinates = (coordinates: number[]) => {
     const top = 28.66776098033687   
-    const bottom = 28.64142690003058
+    const bottom = 28.641503853212868
     const right = 115.81343996831613
     const left =    115.78972714948839
     const blank = 27.8
