@@ -17,7 +17,7 @@ const properties = ref({
     <ol-feature :properties="properties">
         <ol-geom-point :coordinates="props.coordinates"></ol-geom-point>
         <ol-style>
-            <ol-style-icon :src="`/images/marks/${props.category}/${props.id}.svg`" :anchor="[0.5,1]"></ol-style-icon>
+            <ol-style-icon :src="`/images/marks/${props.category}/${props.id}.svg`" :anchor="[0.2,1]"></ol-style-icon>
         </ol-style>
     </ol-feature>
 </template>

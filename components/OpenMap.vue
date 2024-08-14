@@ -80,9 +80,9 @@ const selectInteactionFilter = (feature: any) => {
 
 const overrideStyleFunction = (feature: Feature, style: Style) => {
     style.setImage(new Icon({
-        src: `/${feature.getProperties().name}.svg`,
+        src: `/images/marks/${feature.getProperties().category}/${feature.getProperties().id}.svg`,
         scale: 1.0,
-        anchor: [0.5, 1]
+        anchor: [0.2, 1]
     }))
     return style
 }
@@ -160,7 +160,7 @@ defineExpose({
                 <ol-feature>
                     <ol-geom-point :coordinates="[centerX, centerY]"></ol-geom-point>
                     <ol-style>
-                        <ol-style-icon src="/餐厅.svg" :anchor="[0.5, 1]"></ol-style-icon>
+                        <ol-style-icon src="/flag.svg" :anchor="[0.5, 1]"></ol-style-icon>
                     </ol-style>
                 </ol-feature>
             </ol-source-vector>
