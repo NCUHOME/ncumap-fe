@@ -40,7 +40,7 @@
                 <v-list-item
                     style="display: flex;flex-direction: column;align-items: center;font-size: 13px;color: #8F9DB2;">
                     <v-list-item-title>
-                        进入<a href="./">漫游指北</a>了解更多
+                        进入<a href="https://aiguide.ncuos.com/welcome">漫游指北</a>了解更多
                     </v-list-item-title>
                 </v-list-item>
             </v-list>
@@ -82,7 +82,7 @@
                 <v-list-item
                     style="display: flex;flex-direction: column;align-items: center;font-size: 13px;color: #8F9DB2;">
                     <v-list-item-title>
-                        进入<a href="./">漫游指北</a>了解更多
+                        进入<a href="https://aiguide.ncuos.com/welcome">漫游指北</a>了解更多
                     </v-list-item-title></v-list-item>
             </v-list>
             <v-card-actions style="display: flex;flex-direction: row;justify-content: space-around;">
