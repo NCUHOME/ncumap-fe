@@ -8,7 +8,7 @@ const convertCoordinates = (coordinates: number[]) => {
     const top = 28.66776098033687   
     const bottom = 28.641503853212868
     const right = 115.81343996831613
-    const left =    115.78972714948839
+    const left = 115.78972714948839
     const blank = 27.8
     const unitY = (top - bottom) / 256
     const unitX = (right - left) / (256 - 2*blank)
@@ -81,7 +81,7 @@ const selectInteactionFilter = (feature: any) => {
 const overrideStyleFunction = (feature: Feature, style: Style) => {
     style.setImage(new Icon({
         src: `/images/marks/${feature.getProperties().category}/${feature.getProperties().id}.svg`,
-        scale: 1.0,
+        scale: 1.3,
         anchor: [0.2, 1]
     }))
     return style
