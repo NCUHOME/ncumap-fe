@@ -5,7 +5,7 @@
         <a-tab-pane v-for="(category, index) in map.categories" :key="index" :tab="category"></a-tab-pane>
     </a-tabs>
     <!-- 主地图 -->
-    <div class="map-view" :class="{ 'half': isCategoriesSheetShow }">
+    <div class="map-view" :class="{ 'half': isCategoriesSheetShow || isManualShow }">
         <ClientOnly>
             <OpenMap ref="map" :x="location.x" :y="location.y" />
             <template #fallback>
