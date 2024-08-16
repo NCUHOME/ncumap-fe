@@ -122,7 +122,7 @@ onMounted(async () => {
             <v-img v-for="img in currentBuilding.imgs" :src="img" style="margin: 10px;" />
         </v-card>
         <v-card-text style="display: flex;flex-direction: row;align-items: center;justify-content: center;">
-            信息有误？<a href="incu://Webview?url=https://feedback.ncuos.com">反馈</a>
+            进入<a href="https://aiguide.ncuos.com/welcome" target="_blank">漫游指北</a>了解更多
         </v-card-text>
     </v-card>
 </template>
