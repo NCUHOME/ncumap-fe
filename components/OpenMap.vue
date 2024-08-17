@@ -146,7 +146,7 @@ defineExpose({
         <ol-vector-layer>
             <ol-source-vector>
                 <template v-if="marks != null">
-                    <template v-if="currentCategory == 0">
+                    <template v-if="currentCategory == 0 || currentCategory == 1">
                         <template v-for="category in categories">
                             <template v-for="mark in marks[category]">
                                 <MapMark v-if="mark.priority <= currentZoom"
