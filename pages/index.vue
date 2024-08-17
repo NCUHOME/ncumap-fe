@@ -149,6 +149,7 @@ const location = ref({
 })
 
 const token = useState('token', () => route.query.token)
+const baseURL = useState('baseURL', () => 'https://ncumap-be.ncuos.com')
 
 const activeListGroup = ref(-1)
 const bottomSheetSelected = ref(-1)

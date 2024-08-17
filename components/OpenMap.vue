@@ -70,7 +70,7 @@ const featureSelected = (event: ObjectEvent) => {
     selectedFeatures.forEach((feature: any) => {
         const coordinates = feature.getGeometry().getCoordinates();
         view.value?.setCenter(coordinates)
-        router.push(`/${feature.values_.category}/${feature.values_.id}`)
+        router.push(`/${feature.values_.id}?token=${token.value}`)
     })
 };
 
@@ -90,12 +90,12 @@ const overrideStyleFunction = (feature: Feature, style: Style) => {
 const marks = ref<any>(null)
 const categories = ref(['全部', '活动'])
 const currentCategory = ref(0)
-const baseURL = 'https://ncumap-be.ncuos.com'
+const baseURL = useState('baseURL')
 const token = useState('token')
 
 onMounted(async () => {
     try {
-        marks.value = await $fetch(baseURL + '/api/v1/campus/marks',{
+        marks.value = await $fetch(baseURL.value + '/api/v1/campus/marks',{
             headers: {
                 Authorization: 'passport ' + token.value
             }

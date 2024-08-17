@@ -1,14 +1,17 @@
 <script setup lang="ts">
 const route = useRoute()
-const buildings = ref<any>(null)
-const category = <any>route.params.category
 const id = <any>route.params.id
 const currentBuilding = ref<any>(null)
+const token = useState('token', () => route.query.token)
+const baseURL = useState('baseURL', () => 'https://ncumap-be.ncuos.com')
 
 onMounted(async () => {
     try {
-        buildings.value = await $fetch(`/data/buildings/${category}/data.json`)
-        currentBuilding.value = buildings.value[category][id]
+        currentBuilding.value = await $fetch(baseURL.value + `/api/v1/campus/locations/id?location_id=${id}`,{
+            headers: {
+                Authorization: 'passport ' + token.value
+            }
+        })
     } catch (err) {
         alert(err)
     }
@@ -47,7 +50,7 @@ onMounted(async () => {
                 </template>
                 <v-card-title style="color: #123871;">基本职能</v-card-title>
             </v-card-item>
-            <v-card-text v-if="currentBuilding.functions.length > 0">
+            <v-card-text v-if="currentBuilding.functions">
                 <p v-for="f in currentBuilding.functions">
                     {{ f }}
                 </p>
@@ -73,7 +76,7 @@ onMounted(async () => {
                 </template>
                 <v-card-title style="color: #123871;">学院办公点</v-card-title>
             </v-card-item>
-            <v-card-text v-if="currentBuilding.offices.length > 0">
+            <v-card-text v-if="currentBuilding.offices">
                 <p v-for="f in currentBuilding.offices">
                     {{ f }}
                 </p>
@@ -99,7 +102,7 @@ onMounted(async () => {
                 </template>
                 <v-card-title style="color: #123871;">其他</v-card-title>
             </v-card-item>
-            <v-card-text v-if="currentBuilding.activities.length > 0">
+            <v-card-text v-if="currentBuilding.activities">
                 <p v-for="f in currentBuilding.activities">
                     {{ f }}
                 </p>
@@ -118,7 +121,7 @@ onMounted(async () => {
                 </v-card-text>
             </v-card>
         </v-card>
-        <v-card class="content-card" variant="flat" v-if="currentBuilding.imgs.length > 0">
+        <v-card class="content-card" variant="flat" v-if="currentBuilding.imgs">
             <v-img v-for="img in currentBuilding.imgs" :src="img" style="margin: 10px;" />
         </v-card>
         <v-card-text style="display: flex;flex-direction: row;align-items: center;justify-content: center;">
