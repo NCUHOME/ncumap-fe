@@ -21,7 +21,7 @@
     <v-bottom-sheet v-model="isCategoriesSheetShow" :opacity="0" contained height="50vh">
         <v-card height="100%" style="display: flex;flex-direction: column;justify-content: space-between;">
             <v-list :items="map.marks[map.categories[map.currentCategory]]" item-title="name" item-value="id"
-                v-model:selected="bottomSheetSelected" @click:select="bottomSheetSelect">
+                @click:select="bottomSheetSelect">
                 <v-list-item v-for="(item, index) in map.marks[map.categories[map.currentCategory]]" :key="index"
                     :active="index === bottomSheetSelected" @click="bottomSheetSelect(index)" rounded="lg"
                     :border="index === bottomSheetSelected ? 'md' : false"
@@ -95,8 +95,8 @@
     <!-- 活动页面 -->
     <v-bottom-sheet v-model="isActivitiesSheetShow" :opacity="0.3" contained height="70vh">
         <v-card height="100%" style="display: flex;flex-direction: column;justify-content: space-between;">
-            <v-list :items="map.marks[map.categories[map.currentCategory]]" item-title="name" item-value="id"
-                v-model:selected="bottomSheetSelected" @click:select="bottomSheetSelect">
+            <v-list :items="activitiesData" item-title="name" item-value="id"
+                v-model:selected="bottomSheetSelected">
                 <v-list-item
                     style="display: flex;flex-direction: column;align-items: center;font-size: 13px;color: #8F9DB2;">
                     <v-list-item-title>
@@ -106,9 +106,9 @@
             </v-list>
 
             <v-card-actions style="display: flex;flex-direction: row;justify-content: space-around;">
-                <a-button block @click="isCategoriesSheetShow = false" style="background-color: #F3F6F7;">取消</a-button>
+                <a-button block @click="isActivitiesSheetShow = false" style="background-color: #F3F6F7;">取消</a-button>
                 <a-button block type="primary"
-                    @click="$router.push(`/${map.categories[map.currentCategory]}/${bottomSheetSelected}`)"
+                    @click="$router.push(`/activities/${bottomSheetSelected}`)"
                     :disabled="bottomSheetSelected == -1">确认</a-button>
             </v-card-actions>
         </v-card>
@@ -178,11 +178,17 @@ const isCategoriesSheetShow = ref(false)
 const schoolCarDialog = ref(false)
 const isManualShow = ref(false)
 const manualData = ref(null)
+const activitiesData = ref(null)
 const isActivitiesSheetShow = ref(false)
 
 onMounted(async () => {
     try {
         manualData.value = await $fetch(baseURL.value + "/api/v1/freshmen/manual", {
+            headers: {
+                Authorization: 'passport ' + token.value
+            }
+        })
+        activitiesData.value = await $fetch(baseURL.value + "/api/v1/activity/all", {
             headers: {
                 Authorization: 'passport ' + token.value
             }
