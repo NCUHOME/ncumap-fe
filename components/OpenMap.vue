@@ -17,7 +17,8 @@ const convertCoordinates = (coordinates: number[]) => {
 
 const props = defineProps({
     x: Number,
-    y: Number
+    y: Number,
+    infoToken: String
 })
 
 let [centerX, centerY] = convertCoordinates([<number>props.x, <number>props.y])
@@ -90,10 +91,15 @@ const overrideStyleFunction = (feature: Feature, style: Style) => {
 const marks = ref<any>(null)
 const categories = ref(['全部', '活动'])
 const currentCategory = ref(0)
+const baseURL = 'https://ncumap-be.ncuos.com'
 
 onMounted(async () => {
     try {
-        marks.value = await $fetch('/data/marks/data.json')
+        marks.value = await $fetch(baseURL + '/api/v1/campus/marks',{
+            headers: {
+                Authorization: 'passport ' + props.infoToken
+            }
+        })
         categories.value.push(...Object.keys(marks.value))
     } catch (err) {
         alert(err)
@@ -145,7 +151,7 @@ defineExpose({
                             <template v-for="mark in marks[category]">
                                 <MapMark v-if="mark.priority <= currentZoom"
                                     :coordinates="convertCoordinates(mark.coordinates)" :name="mark.name"
-                                    :category="category" :id="mark.id" />
+                                    :category="category" :id="mark.location_id" />
                             </template>
                         </template>
                     </template>
@@ -153,10 +159,16 @@ defineExpose({
                         <template v-for="mark in marks[categories[currentCategory]]">
                             <MapMark v-if="mark.priority <= currentZoom"
                                 :coordinates="convertCoordinates(mark.coordinates)" :name="mark.name"
-                                :category="categories[currentCategory]" :id="mark.id" />
+                                :category="categories[currentCategory]" :id="mark.location_id" />
                         </template>
                     </template>
                 </template>
+                <ol-feature>
+                    <ol-geom-point :coordinates="[centerX, centerY]"></ol-geom-point>
+                    <ol-style>
+                        <ol-style-icon src="/flag.svg" :anchor="[0.5, 1]"></ol-style-icon>
+                    </ol-style>
+                </ol-feature>
             </ol-source-vector>
         </ol-vector-layer>
     </ol-map>

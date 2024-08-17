@@ -3,7 +3,7 @@ const props = defineProps<{
     name: string,
     coordinates: (number | undefined)[],
     category: string,
-    id: number
+    id: string
 }>()
 
 const properties = ref({
