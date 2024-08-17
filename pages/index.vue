@@ -201,7 +201,6 @@ onMounted(async () => {
                 Authorization: 'passport ' + token.value
             }
         })
-        console.log(activitiesData.value)
     } catch (err) {
         alert(err)
     }
