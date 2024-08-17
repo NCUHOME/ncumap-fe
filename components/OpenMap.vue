@@ -17,8 +17,7 @@ const convertCoordinates = (coordinates: number[]) => {
 
 const props = defineProps({
     x: Number,
-    y: Number,
-    infoToken: String
+    y: Number
 })
 
 let [centerX, centerY] = convertCoordinates([<number>props.x, <number>props.y])
@@ -92,12 +91,13 @@ const marks = ref<any>(null)
 const categories = ref(['全部', '活动'])
 const currentCategory = ref(0)
 const baseURL = 'https://ncumap-be.ncuos.com'
+const token = useState('token')
 
 onMounted(async () => {
     try {
         marks.value = await $fetch(baseURL + '/api/v1/campus/marks',{
             headers: {
-                Authorization: 'passport ' + props.infoToken
+                Authorization: 'passport ' + token.value
             }
         })
         categories.value.push(...Object.keys(marks.value))

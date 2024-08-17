@@ -7,7 +7,7 @@
     <!-- 主地图 -->
     <div class="map-view" :class="{ 'half': isCategoriesSheetShow || isManualShow }">
         <ClientOnly>
-            <OpenMap ref="map" :x="location.x" :y="location.y" :infoToken="route.query.token" />
+            <OpenMap ref="map" :x="location.x" :y="location.y" />
             <template #fallback>
                 <div
                     style="height: 100%;width: 100%;display: flex;align-items: center;justify-content: center;flex-direction: column;">
@@ -148,7 +148,7 @@ const location = ref({
     y: 28.663298
 })
 
-const token = useStorage
+const token = useState('token', () => route.query.token)
 
 const activeListGroup = ref(-1)
 const bottomSheetSelected = ref(-1)
