@@ -16,7 +16,6 @@ onMounted(async () => {
         ).then(
             data =>  currentActivity.value = data
         )
-        console.log(currentActivity.value)
     } catch (err) {
         alert(err)
     }

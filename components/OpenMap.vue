@@ -97,6 +97,16 @@ const categories = ref(['全部', '活动'])
 const currentCategory = ref(0)
 const baseURL = useState('baseURL')
 
+var geoOptions = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0
+};
+
+const geoSuccess = (position: any) => {
+    center.value = [position.coords.longitude, position.coords.latitude]
+}
+
 onMounted(async () => {
     try {
         await fetcher.get(baseURL.value + '/api/v1/campus/marks').then(
@@ -105,6 +115,7 @@ onMounted(async () => {
             marks.value = data
         })
         categories.value.push(...Object.keys(marks.value))
+        navigator.geolocation.getCurrentPosition(geoSuccess, (error) => alert(error.message), geoOptions)
     } catch (err) {
         alert(err)
     }

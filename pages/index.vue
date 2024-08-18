@@ -1,7 +1,8 @@
 <template>
     <!-- 上方选项卡 -->
     <a-tabs v-model:activeKey="map.currentCategory" v-if="map != null"
-        style="position: absolute;z-index: 9999;background-color: white;width: 100%;" @tab-click="showBottomSheet" @touchmove.prevent>
+        style="position: absolute;z-index: 9999;background-color: white;width: 100%;" @tab-click="showBottomSheet"
+        @touchmove.prevent>
         <a-tab-pane v-for="(category, index) in map.categories" :key="index" :tab="category"></a-tab-pane>
     </a-tabs>
     <!-- 主地图 -->
@@ -95,8 +96,7 @@
     <!-- 活动页面 -->
     <v-bottom-sheet v-model="isActivitiesSheetShow" :opacity="0.3" contained height="70vh">
         <v-card height="100%" style="display: flex;flex-direction: column;justify-content: space-between;">
-            <v-list :items="activitiesData"
-                v-model:selected="bottomSheetSelected">
+            <v-list :items="activitiesData" v-model:selected="bottomSheetSelected">
                 <v-list-item v-for="item in activitiesData" :value="item.id">
                     <v-list-item-title>
                         {{ item.name }}
@@ -115,8 +115,7 @@
 
             <v-card-actions style="display: flex;flex-direction: row;justify-content: space-around;">
                 <a-button block @click="isActivitiesSheetShow = false" style="background-color: #F3F6F7;">取消</a-button>
-                <a-button block type="primary"
-                    @click="$router.push(`/activities/${bottomSheetSelected}`)"
+                <a-button block type="primary" @click="$router.push(`/activities/${bottomSheetSelected}`)"
                     :disabled="bottomSheetSelected == -1">确认</a-button>
             </v-card-actions>
         </v-card>
@@ -200,10 +199,10 @@ onMounted(async () => {
         ).then(
             data => manualData.value = data
         )
-       await fetcher.get(baseURL.value + "/api/v1/activity/all").then(
+        await fetcher.get(baseURL.value + "/api/v1/activity/all").then(
             data => data.data
         ).then(
-            data =>  activitiesData.value = data
+            data => activitiesData.value = data
         )
     } catch (err) {
         alert(err)
