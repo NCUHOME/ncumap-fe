@@ -168,7 +168,7 @@
 <script setup>
 import OpenMap from '../components/OpenMap.vue';
 import { ref } from 'vue';
-import { mincu } from 'mincu-vanilla'
+import { mincu, uiModule } from 'mincu-vanilla'
 import axios from 'axios'
 
 const fetcher = axios.create()
@@ -194,6 +194,7 @@ const isActivitiesSheetShow = ref(false)
 
 onMounted(async () => {
     try {
+        uiModule.handleShowHeader(true)
         await fetcher.get(baseURL.value + "/api/v1/freshmen/manual").then(
             data => data.data
         ).then(
