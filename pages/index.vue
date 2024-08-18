@@ -139,7 +139,7 @@
             </div>
             <div>
                 <v-btn :rounded="0" stacked flat min-width="0" width="44px" height="50px" style="padding: 0;"
-                    @click="map.backToCenter()">
+                    @click="map.locate()">
                     <img src="/icons/定位.svg" />
                     定位
                 </v-btn>

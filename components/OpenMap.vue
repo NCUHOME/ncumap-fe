@@ -105,6 +105,11 @@ var geoOptions = {
 
 const geoSuccess = (position: any) => {
     center.value = [position.coords.longitude, position.coords.latitude]
+    viewTo(center.value)
+}
+
+const locate = () => {
+    navigator.geolocation.getCurrentPosition(geoSuccess, (error) => alert(error.message), geoOptions)
 }
 
 onMounted(async () => {
@@ -115,7 +120,7 @@ onMounted(async () => {
             marks.value = data
         })
         categories.value.push(...Object.keys(marks.value))
-        navigator.geolocation.getCurrentPosition(geoSuccess, (error) => alert(error.message), geoOptions)
+        locate()
     } catch (err) {
         alert(err)
     }
@@ -141,7 +146,8 @@ defineExpose({
     marks,
     viewTo,
     zoomTo,
-    backToCenter
+    backToCenter,
+    locate
 })
 </script>
 
@@ -179,7 +185,7 @@ defineExpose({
                     </template>
                 </template>
                 <ol-feature>
-                    <ol-geom-point :coordinates="[centerX, centerY]"></ol-geom-point>
+                    <ol-geom-point :coordinates="center"></ol-geom-point>
                     <ol-style>
                         <ol-style-icon src="/flag.svg" :anchor="[0.5, 1]"></ol-style-icon>
                     </ol-style>
