@@ -5,6 +5,7 @@ import type { View, Feature } from "ol";
 import { Style, Icon } from 'ol/style';
 import { mincu } from 'mincu-vanilla'
 import axios from 'axios'
+import AMapLoader from '@amap/amap-jsapi-loader';
 
 const fetcher = axios.create()
 mincu.useAxiosInterceptors(fetcher)
@@ -97,14 +98,8 @@ const categories = ref(['全部', '活动'])
 const currentCategory = ref(0)
 const baseURL = useState('baseURL')
 
-var geoOptions = {
-    enableHighAccuracy: true,
-    timeout: 5000,
-    maximumAge: 0
-};
-
 const geoSuccess = (position: any) => {
-    let [centerX, centerY] = convertCoordinates([position.coords.longitude, position.coords.latitude])
+    let [centerX, centerY] = convertCoordinates([position.lng, position.lat])
 
     if (centerX > 256) {
         centerX = 256
@@ -124,9 +119,33 @@ const geoSuccess = (position: any) => {
 }
 
 const locate = () => {
-    navigator.geolocation.getCurrentPosition(geoSuccess, (error) => alert(error.message), geoOptions)
-}
+    window._AMapSecurityConfig = {
+        securityJsCode: "3b0c7a5e50d23895fb666c57276a941e",
+    };
+    AMapLoader.load({
+        key: "9ccb98703bb482fd005469e70f67c640", // 申请好的Web端开发者Key，首次调用 load 时必填
+        version: "2.0", // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
+        plugins: ['AMap.Geolocation'], //需要使用的的插件列表，如比例尺'AMap.Scale'，支持添加多个如：['...','...']
+    })
+        .then((AMap) => {
+            AMap.plugin('AMap.Geolocation', function () {
+                var geolocation = new AMap.Geolocation({
+                    enableHighAccuracy: true, // 是否使用高精度定位，默认：true
+                    timeout: 10000, // 设置定位超时时间，默认：无穷大
+                })
 
+                geolocation.getCurrentPosition(function (status: any, result: any) {
+                    if (status == 'complete') {
+                        geoSuccess(result.position)
+                    } else {
+                        console.log(result)
+                    }
+                });
+            })
+
+            //navigator.geolocation.getCurrentPosition(geoSuccess, (error) => alert(error.message), geoOptions)
+        })
+}
 onMounted(async () => {
     try {
         locate()
