@@ -3,6 +3,11 @@ import { ref } from 'vue'
 import type { ObjectEvent } from "ol/Object";
 import type { View, Feature } from "ol";
 import { Style, Icon } from 'ol/style';
+import { mincu } from 'mincu-vanilla'
+import axios from 'axios'
+
+const fetcher = axios.create()
+mincu.useAxiosInterceptors(fetcher)
 
 const convertCoordinates = (coordinates: number[]) => {
     const top = 28.66776098033687   
@@ -70,7 +75,7 @@ const featureSelected = (event: ObjectEvent) => {
     selectedFeatures.forEach((feature: any) => {
         const coordinates = feature.getGeometry().getCoordinates();
         view.value?.setCenter(coordinates)
-        router.push(`/${feature.values_.id}?token=${token.value}`)
+        router.push(`/${feature.values_.id}`)
     })
 };
 
@@ -91,14 +96,13 @@ const marks = ref<any>(null)
 const categories = ref(['全部', '活动'])
 const currentCategory = ref(0)
 const baseURL = useState('baseURL')
-const token = useState('token')
 
 onMounted(async () => {
     try {
-        marks.value = await $fetch(baseURL.value + '/api/v1/campus/marks',{
-            headers: {
-                Authorization: 'passport ' + token.value
-            }
+        await fetcher.get(baseURL.value + '/api/v1/campus/marks').then(
+            data => data.data
+        ).then(data => {
+            marks.value = data
         })
         categories.value.push(...Object.keys(marks.value))
     } catch (err) {

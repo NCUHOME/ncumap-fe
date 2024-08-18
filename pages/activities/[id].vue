@@ -2,16 +2,20 @@
 const route = useRoute()
 const id = <any>route.params.id
 const currentActivity = ref<any>(null)
-const token = useState('token', () => route.query.token)
 const baseURL = useState('baseURL', () => 'https://ncumap-be.ncuos.com')
+import { mincu } from 'mincu-vanilla'
+import axios from 'axios'
+
+const fetcher = axios.create()
+mincu.useAxiosInterceptors(fetcher)
 
 onMounted(async () => {
     try {
-        currentActivity.value = await $fetch(baseURL.value + `/api/v1/activity/id?id=${id}`, {
-            headers: {
-                Authorization: 'passport ' + token.value
-            }
-        })
+        await fetcher.get(baseURL.value + `/api/v1/activity/id?id=${id}`).then(
+            data => data.data
+        ).then(
+            data =>  currentActivity.value = data
+        )
         console.log(currentActivity.value)
     } catch (err) {
         alert(err)
@@ -63,7 +67,7 @@ onMounted(async () => {
             </v-card-text>
             <v-card-actions v-if="currentActivity.location_id">
                 <a-button block type="primary"
-                    @click="$router.push(`/${currentActivity.location_id}?token=${token}`)">查看地点详情</a-button>
+                    @click="$router.push(`/${currentActivity.location_id}`)">查看地点详情</a-button>
             </v-card-actions>
         </v-card>
         <v-card class="content-card" variant="flat">

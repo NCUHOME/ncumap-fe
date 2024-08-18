@@ -48,7 +48,7 @@
             <v-card-actions style="display: flex;flex-direction: row;justify-content: space-around;">
                 <a-button block @click="isCategoriesSheetShow = false" style="background-color: #F3F6F7;">取消</a-button>
                 <a-button block type="primary"
-                    @click="$router.push(`/${map.marks[map.categories[map.currentCategory]][bottomSheetSelected].location_id}?token=${token}`)"
+                    @click="$router.push(`/${map.marks[map.categories[map.currentCategory]][bottomSheetSelected].location_id}`)"
                     :disabled="bottomSheetSelected == -1">确认</a-button>
             </v-card-actions>
         </v-card>
@@ -116,7 +116,7 @@
             <v-card-actions style="display: flex;flex-direction: row;justify-content: space-around;">
                 <a-button block @click="isActivitiesSheetShow = false" style="background-color: #F3F6F7;">取消</a-button>
                 <a-button block type="primary"
-                    @click="$router.push(`/activities/${bottomSheetSelected}?token=${token}`)"
+                    @click="$router.push(`/activities/${bottomSheetSelected}`)"
                     :disabled="bottomSheetSelected == -1">确认</a-button>
             </v-card-actions>
         </v-card>
@@ -169,6 +169,11 @@
 <script setup>
 import OpenMap from '../components/OpenMap.vue';
 import { ref } from 'vue';
+import { mincu } from 'mincu-vanilla'
+import axios from 'axios'
+
+const fetcher = axios.create()
+mincu.useAxiosInterceptors(fetcher)
 
 const route = useRoute()
 const map = ref(null)
@@ -177,7 +182,6 @@ const location = ref({
     y: 28.663298
 })
 
-const token = useState('token', () => route.query.token)
 const baseURL = useState('baseURL', () => 'https://ncumap-be.ncuos.com')
 
 const activeListGroup = ref(-1)
@@ -191,16 +195,16 @@ const isActivitiesSheetShow = ref(false)
 
 onMounted(async () => {
     try {
-        manualData.value = await $fetch(baseURL.value + "/api/v1/freshmen/manual", {
-            headers: {
-                Authorization: 'passport ' + token.value
-            }
-        })
-        activitiesData.value = await $fetch(baseURL.value + "/api/v1/activity/all", {
-            headers: {
-                Authorization: 'passport ' + token.value
-            }
-        })
+        await fetcher.get(baseURL.value + "/api/v1/freshmen/manual").then(
+            data => data.data
+        ).then(
+            data => manualData.value = data
+        )
+       await fetcher.get(baseURL.value + "/api/v1/activity/all").then(
+            data => data.data
+        ).then(
+            data =>  activitiesData.value = data
+        )
     } catch (err) {
         alert(err)
     }
@@ -212,6 +216,7 @@ const showBottomSheet = (currentCategory) => {
     isManualShow.value = false
     if (currentCategory == 0 || currentCategory == 1) {
         isCategoriesSheetShow.value = false
+        isActivitiesSheetShow.value = false
         if (currentCategory == 1) {
             isActivitiesSheetShow.value = true
         }
@@ -238,7 +243,7 @@ const bottomSheetSelect = (index) => {
 const manualRedirect = () => {
     const router = useRouter()
     const current = manualData.value[Object.keys(manualData.value)[activeListGroup.value]][bottomSheetSelected.value]
-    router.push(`/${current.location_id}?token=${token.value}`)
+    router.push(`/${current.location_id}`)
 }
 
 const manualSelect = (itemIndex, index) => {

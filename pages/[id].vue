@@ -2,16 +2,21 @@
 const route = useRoute()
 const id = <any>route.params.id
 const currentBuilding = ref<any>(null)
-const token = useState('token', () => route.query.token)
 const baseURL = useState('baseURL', () => 'https://ncumap-be.ncuos.com')
+import { mincu } from 'mincu-vanilla'
+import axios from 'axios'
+
+const fetcher = axios.create()
+mincu.useAxiosInterceptors(fetcher)
+
 
 onMounted(async () => {
     try {
-        currentBuilding.value = await $fetch(baseURL.value + `/api/v1/campus/locations/id?location_id=${id}`,{
-            headers: {
-                Authorization: 'passport ' + token.value
-            }
-        })
+        await fetcher.get(baseURL.value + `/api/v1/campus/locations/id?location_id=${id}`).then(
+            data => data.data
+        ).then(
+            data =>  currentBuilding.value = data
+        )
     } catch (err) {
         alert(err)
     }
