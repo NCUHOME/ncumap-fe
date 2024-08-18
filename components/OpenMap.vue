@@ -10,13 +10,13 @@ const fetcher = axios.create()
 mincu.useAxiosInterceptors(fetcher)
 
 const convertCoordinates = (coordinates: number[]) => {
-    const top = 28.66776098033687   
+    const top = 28.66776098033687
     const bottom = 28.641503853212868
     const right = 115.81343996831613
     const left = 115.78972714948839
     const blank = 27.8
     const unitY = (top - bottom) / 256
-    const unitX = (right - left) / (256 - 2*blank)
+    const unitX = (right - left) / (256 - 2 * blank)
     return [(coordinates[0] - left) / unitX + blank, (coordinates[1] - bottom) / unitY]
 }
 
@@ -29,13 +29,13 @@ let [centerX, centerY] = convertCoordinates([<number>props.x, <number>props.y])
 
 if (centerX > 256) {
     centerX = 256
-} else if(centerX < 0) {
+} else if (centerX < 0) {
     centerX = 0
 }
 
 if (centerY > 256) {
     centerY = 256
-} else if(centerY < 0) {
+} else if (centerY < 0) {
     centerY = 0
 }
 
@@ -104,7 +104,22 @@ var geoOptions = {
 };
 
 const geoSuccess = (position: any) => {
-    center.value = [position.coords.longitude, position.coords.latitude]
+    let [centerX, centerY] = convertCoordinates([position.coords.longitude, position.coords.latitude])
+
+    if (centerX > 256) {
+        centerX = 256
+    } else if (centerX < 0) {
+        centerX = 0
+    }
+
+    if (centerY > 256) {
+        centerY = 256
+    } else if (centerY < 0) {
+        centerY = 0
+    }
+
+    center.value = [centerX, centerY]
+    console.log(center.value)
     viewTo(center.value)
 }
 
@@ -114,13 +129,13 @@ const locate = () => {
 
 onMounted(async () => {
     try {
+        locate()
         await fetcher.get(baseURL.value + '/api/v1/campus/marks').then(
             data => data.data
         ).then(data => {
             marks.value = data
         })
         categories.value.push(...Object.keys(marks.value))
-        locate()
     } catch (err) {
         alert(err)
     }
