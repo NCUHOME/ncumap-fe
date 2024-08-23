@@ -99,9 +99,21 @@ const categories = ref(['全部', '活动'])
 const currentCategory = ref(0)
 const baseURL = useState('baseURL')
 
+const isInSchool = ([x, y]: number[]) => {
+    const outterRadius = 327.903773758
+    const outterPosition = [358.719676797, 256-267.353227436]
+    const innerRadius = 139.212193554
+    const innerPosition = [237.606831329, 256-230.578642916]
+
+    const distance = ([x1, y1]: number[], [x2, y2]: number[]) => {
+        return Math.sqrt((x1-x2)**2 + (y1-y2)**2)
+    }
+
+    return distance([x, y], outterPosition) < outterRadius && distance([x, y], innerPosition) > innerRadius
+}
+
 const geoSuccess = (position: any) => {
     let [centerX, centerY] = convertCoordinates(gcj02towgs84(position.lng, position.lat))
-    console.log([centerX, centerY])
 
     if (centerX > 256) {
         centerX = 256
@@ -117,7 +129,12 @@ const geoSuccess = (position: any) => {
 
     center.value = [centerX, centerY]
     console.log(center.value)
-    viewTo(center.value)
+
+    if (isInSchool(center.value)) {
+        viewTo(center.value)
+    } else {
+        viewTo(convertCoordinates([115.804362, 28.663298]))
+    }
 }
 
 const locate = () => {
