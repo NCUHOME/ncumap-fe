@@ -89,6 +89,10 @@ const baseURL = useState('baseURL')
 const geoLocationMark = ref<number[]>([])
 
 const isInSchool = ([x, y]: number[]) => {
+    if (x > 256 || y > 256 || x < 0 || y < 0) {
+        return false
+    }
+
     const outterRadius = 338.903773758
     const outterPosition = [358.719676797, 256 - 267.353227436]
     const innerRadius = 139.212193554
