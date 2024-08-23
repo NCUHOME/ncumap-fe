@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import type { ObjectEvent } from "ol/Object";
 import type { View, Feature } from "ol";
 import { Style, Icon } from 'ol/style';
-import { mincu } from 'mincu-vanilla'
+import { mincu, uiModule } from 'mincu-vanilla'
 import axios from 'axios'
 import AMapLoader from '@amap/amap-jsapi-loader';
 import { gcj02towgs84 } from '~/utils/gcj02towgs84';
@@ -133,7 +133,7 @@ const geoSuccess = (position: any) => {
         geoLocationMark.value = [centerX, centerY]
         center.value = [centerX, centerY]
     } else {
-        console.log("在学校外")
+        mincu.toast.info(`位于校外(${gcj02towgs84(position.lng, position.lat)})`)
         viewTo([115.804362, 28.663298])
     }
 }
