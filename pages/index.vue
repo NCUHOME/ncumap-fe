@@ -313,7 +313,7 @@ if (route.query.x && route.query.y) {
 }
 
 .half {
-    height: 50vh;
+    height: 55vh;
 }
 
 ::v-deep(.ant-tabs-nav) {
@@ -350,5 +350,11 @@ if (route.query.x && route.query.y) {
     color: #123871;
     font-size: 18px;
     padding-top: 15px;
+}
+
+.v-bottom-sheet>.v-bottom-sheet__content.v-overlay__content>.v-card {
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    box-shadow: none;
 }
 </style>
