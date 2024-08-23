@@ -101,13 +101,13 @@ const baseURL = useState('baseURL')
 const geoLocationMark = ref<number[]>([])
 
 const isInSchool = ([x, y]: number[]) => {
-    const outterRadius = 327.903773758
-    const outterPosition = [358.719676797, 256-267.353227436]
+    const outterRadius = 338.903773758
+    const outterPosition = [358.719676797, 256 - 267.353227436]
     const innerRadius = 139.212193554
-    const innerPosition = [237.606831329, 256-230.578642916]
+    const innerPosition = [237.606831329, 256 - 230.578642916]
 
     const distance = ([x1, y1]: number[], [x2, y2]: number[]) => {
-        return Math.sqrt((x1-x2)**2 + (y1-y2)**2)
+        return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
     }
 
     return distance([x, y], outterPosition) < outterRadius && distance([x, y], innerPosition) > innerRadius
