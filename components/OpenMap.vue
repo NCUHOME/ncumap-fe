@@ -98,6 +98,7 @@ const marks = ref<any>(null)
 const categories = ref(['全部', '活动'])
 const currentCategory = ref(0)
 const baseURL = useState('baseURL')
+const geoLocationMark = ref<number[]>([])
 
 const isInSchool = ([x, y]: number[]) => {
     const outterRadius = 327.903773758
@@ -114,6 +115,7 @@ const isInSchool = ([x, y]: number[]) => {
 
 const geoSuccess = (position: any) => {
     let [centerX, centerY] = convertCoordinates(gcj02towgs84(position.lng, position.lat))
+    //let [centerX, centerY] = convertCoordinates([115.804362, 28.663298])
 
     if (centerX > 256) {
         centerX = 256
@@ -127,13 +129,12 @@ const geoSuccess = (position: any) => {
         centerY = 0
     }
 
-    center.value = [centerX, centerY]
-    console.log(center.value)
-
-    if (isInSchool(center.value)) {
-        viewTo(center.value)
+    if (isInSchool([centerX, centerY])) {
+        geoLocationMark.value = [centerX, centerY]
+        center.value = [centerX, centerY]
     } else {
-        viewTo(convertCoordinates([115.804362, 28.663298]))
+        console.log("在学校外")
+        viewTo([115.804362, 28.663298])
     }
 }
 
@@ -242,8 +243,8 @@ defineExpose({
                         </template>
                     </template>
                 </template>
-                <ol-feature>
-                    <ol-geom-point :coordinates="center"></ol-geom-point>
+                <ol-feature v-if="geoLocationMark.length > 0">
+                    <ol-geom-point :coordinates="geoLocationMark"></ol-geom-point>
                     <ol-style>
                         <ol-style-icon src="/flag.svg" :anchor="[0.5, 1]"></ol-style-icon>
                     </ol-style>
