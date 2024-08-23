@@ -1,8 +1,8 @@
 <template>
     <!-- 上方选项卡 -->
     <a-tabs v-model:activeKey="map.currentCategory" v-if="map != null"
-        style="position: absolute;z-index: 9999;background-color: white;width: 100%;" @tab-click="showBottomSheet"
-        @touchmove.prevent>
+        style="position: absolute;z-index: 9999;background-color: white;width: 100%; padding-left: 20px; padding-right: 20px;"
+        @tab-click="showBottomSheet" @touchmove.prevent>
         <a-tab-pane v-for="(category, index) in map.categories" :key="index" :tab="category"></a-tab-pane>
     </a-tabs>
     <!-- 主地图 -->
@@ -26,7 +26,7 @@
                 <v-list-item v-for="(item, index) in map.marks[map.categories[map.currentCategory]]" :key="index"
                     :active="index === bottomSheetSelected" @click="bottomSheetSelect(index)" rounded="lg"
                     :border="index === bottomSheetSelected ? 'md' : false"
-                    style="padding: 10px;border-color: #164CD7 !important;">
+                    class="selected">
                     <v-list-item-title>
                         <div style="display: flex;flex-direction: row;justify-content: space-between;">
                             <span style="font-size: 21px;">{{ item.name }}</span>
@@ -50,7 +50,7 @@
                 <a-button block @click="isCategoriesSheetShow = false" style="background-color: #F3F6F7;">取消</a-button>
                 <a-button block type="primary"
                     @click="$router.push(`/${map.marks[map.categories[map.currentCategory]][bottomSheetSelected].location_id}`)"
-                    :disabled="bottomSheetSelected == -1">确认</a-button>
+                    :disabled="bottomSheetSelected == -1">详情</a-button>
             </v-card-actions>
         </v-card>
     </v-bottom-sheet>
@@ -59,7 +59,7 @@
         <v-card height="100%" style="display: flex;flex-direction: column;justify-content: space-between;">
             <v-list open-strategy="single" @click:open="bottomSheetSelected = -1">
                 <template v-for="(category, index) in Object.keys(manualData)" :key="index">
-                    <v-list-group v-if="manualData[category]" style="color: #476491;font-size: 13px;">
+                    <v-list-group v-if="manualData[category]" style="color: #476491;font-size: 13px;padding-left: 15px;padding-right: 15px;">
                         <template v-slot:activator="{ props }">
                             <v-list-item v-bind="props" :title="category">
                                 <template v-slot:append="{ isActive }">
@@ -71,7 +71,7 @@
                         <v-list-item v-for="(item, itemIndex) in manualData[category]" :key="itemIndex"
                             :active="itemIndex === bottomSheetSelected" @click="manualSelect(itemIndex, index)"
                             rounded="lg" :border="itemIndex === bottomSheetSelected ? 'md' : false"
-                            style="padding: 10px;border-color: #164CD7 !important;">
+                            class="selected">
                             <v-list-item-title>
                                 <div style="display: flex;flex-direction: row;justify-content: space-between;">
                                     <span style="font-size: 15px;color: black;">{{ item.name }}</span>
@@ -116,7 +116,7 @@
             <v-card-actions style="display: flex;flex-direction: row;justify-content: space-around;">
                 <a-button block @click="isActivitiesSheetShow = false" style="background-color: #F3F6F7;">取消</a-button>
                 <a-button block type="primary" @click="$router.push(`/activities/${bottomSheetSelected}`)"
-                    :disabled="bottomSheetSelected == -1">确认</a-button>
+                    :disabled="bottomSheetSelected == -1">详情</a-button>
             </v-card-actions>
         </v-card>
     </v-bottom-sheet>
@@ -151,7 +151,7 @@
         <v-card>
             <v-btn icon width="45px" height="45px" color="rgba(255,255,255,0)"
                 style="position: fixed;z-index: 9999;top: 15px;left: 15px;" variant="flat"
-                @click="schoolCarDialog = false">
+                @click.stop="schoolCarDialog = false">
                 <v-img src="/back.svg" width="auto">
                     <template v-slot:placeholder>
                         <div class="d-flex align-center justify-center fill-height">
@@ -160,7 +160,21 @@
                     </template>
                 </v-img>
             </v-btn>
-            <v-img src="/schoolCar.svg" width="auto"></v-img>
+            <v-img v-if="schoolCarNumber == 0" src="/schoolCar.svg" width="auto" @click.stop="schoolCarNumber = 1">
+                <template v-slot:placeholder>
+                    <div class="d-flex align-center justify-center fill-height">
+                        <v-progress-circular color="grey-lighten-4" indeterminate></v-progress-circular>
+                    </div>
+                </template>
+            </v-img>
+            <v-img v-else-if="schoolCarNumber == 1" src="/schoolCar1.svg" width="auto"
+                @click.stop="schoolCarNumber = 0">
+                <template v-slot:placeholder>
+                    <div class="d-flex align-center justify-center fill-height">
+                        <v-progress-circular color="grey-lighten-4" indeterminate></v-progress-circular>
+                    </div>
+                </template>
+            </v-img>
         </v-card>
     </v-dialog>
 </template>
@@ -187,6 +201,7 @@ const activeListGroup = ref(-1)
 const bottomSheetSelected = ref(-1)
 const isCategoriesSheetShow = ref(false)
 const schoolCarDialog = ref(false)
+const schoolCarNumber = ref(0)
 const isManualShow = ref(false)
 const manualData = ref(null)
 const activitiesData = ref(null)
@@ -229,6 +244,7 @@ const showBottomSheet = (currentCategory) => {
 
 const showManual = () => {
     bottomSheetSelected.value = -1
+    map.value.showAllMarks()
     isCategoriesSheetShow.value = false
     isManualShow.value = true
 }
@@ -251,6 +267,7 @@ const manualSelect = (itemIndex, index) => {
     activeListGroup.value = index
     const current = manualData.value[Object.keys(manualData.value)[activeListGroup.value]][bottomSheetSelected.value]
     map.value.viewTo(current.coordinates)
+    map.value.zoomTo(3 > current.priority ? 3 : current.priority)
 }
 
 if (route.query.x && route.query.y) {
@@ -307,5 +324,15 @@ if (route.query.x && route.query.y) {
     font-size: 18px;
     border-radius: 10px;
     border: 0;
+}
+
+.selected {
+    margin-left: 20px;
+    border-color: #164CD7 !important;
+    margin-right: 20px;
+}
+
+::v-deep(.v-list-item--active>.v-list-item__overlay) {
+    opacity: 0 !important;
 }
 </style>

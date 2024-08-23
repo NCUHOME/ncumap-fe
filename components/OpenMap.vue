@@ -6,6 +6,7 @@ import { Style, Icon } from 'ol/style';
 import { mincu } from 'mincu-vanilla'
 import axios from 'axios'
 import AMapLoader from '@amap/amap-jsapi-loader';
+import { gcj02towgs84 } from '~/utils/gcj02towgs84';
 
 const fetcher = axios.create()
 mincu.useAxiosInterceptors(fetcher)
@@ -99,7 +100,8 @@ const currentCategory = ref(0)
 const baseURL = useState('baseURL')
 
 const geoSuccess = (position: any) => {
-    let [centerX, centerY] = convertCoordinates([position.lng, position.lat])
+    let [centerX, centerY] = convertCoordinates(gcj02towgs84(position.lng, position.lat))
+    console.log([centerX, centerY])
 
     if (centerX > 256) {
         centerX = 256
@@ -172,6 +174,10 @@ const backToCenter = () => {
     view.value?.setCenter([centerX, centerY])
 }
 
+const showAllMarks = () => {
+    currentCategory.value = 0
+}
+
 defineExpose({
     currentZoom,
     currentCenter,
@@ -181,7 +187,8 @@ defineExpose({
     viewTo,
     zoomTo,
     backToCenter,
-    locate
+    locate,
+    showAllMarks
 })
 </script>
 
