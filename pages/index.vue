@@ -95,7 +95,7 @@
             <v-card-actions style="display: flex;flex-direction: row;justify-content: space-around;">
                 <a-button block @click="isManualShow = false" style="background-color: #F3F6F7;">取消</a-button>
                 <a-button block type="primary" @click="manualRedirect"
-                    :disabled="bottomSheetSelected == -1">确认</a-button>
+                    :disabled="bottomSheetSelected == -1">前往</a-button>
             </v-card-actions>
         </v-card>
     </v-bottom-sheet>
