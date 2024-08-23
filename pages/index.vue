@@ -21,6 +21,9 @@
     <!-- 建筑选择菜单 -->
     <v-bottom-sheet v-model="isCategoriesSheetShow" :opacity="0" contained height="50vh">
         <v-card height="100%" style="display: flex;flex-direction: column;justify-content: space-between;">
+            <v-card-title class="bottom-sheet-title">
+                选择地点
+            </v-card-title>
             <v-list :items="map.marks[map.categories[map.currentCategory]]" item-title="name" item-value="id"
                 @click:select="bottomSheetSelect">
                 <v-list-item v-for="(item, index) in map.marks[map.categories[map.currentCategory]]" :key="index"
@@ -57,6 +60,9 @@
     <!-- 新生手册 -->
     <v-bottom-sheet v-if="map != null" v-model="isManualShow" :opacity="0" contained height="50vh">
         <v-card height="100%" style="display: flex;flex-direction: column;justify-content: space-between;">
+            <v-card-title class="bottom-sheet-title">
+                选择地点
+            </v-card-title>
             <v-list open-strategy="single" @click:open="bottomSheetSelected = -1">
                 <template v-for="(category, index) in Object.keys(manualData)" :key="index">
                     <v-list-group v-if="manualData[category]" style="color: #476491;font-size: 13px;padding-left: 15px;padding-right: 15px;">
@@ -334,5 +340,15 @@ if (route.query.x && route.query.y) {
 
 ::v-deep(.v-list-item--active>.v-list-item__overlay) {
     opacity: 0 !important;
+}
+
+.bottom-sheet-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: #123871;
+    font-size: 18px;
+    padding-top: 15px;
 }
 </style>
