@@ -29,18 +29,6 @@ const props = defineProps({
 
 let [centerX, centerY] = convertCoordinates([<number>props.x, <number>props.y])
 
-if (centerX > 256) {
-    centerX = 256
-} else if (centerX < 0) {
-    centerX = 0
-}
-
-if (centerY > 256) {
-    centerY = 256
-} else if (centerY < 0) {
-    centerY = 0
-}
-
 const size = ref([256, 256]);
 const center = ref([centerX, centerY]);
 const extent = ref([0, 0, ...size.value]);
@@ -116,18 +104,6 @@ const isInSchool = ([x, y]: number[]) => {
 const geoSuccess = (position: any) => {
     let [centerX, centerY] = convertCoordinates(gcj02towgs84(position.lng, position.lat))
     //let [centerX, centerY] = convertCoordinates([115.804362, 28.663298])
-
-    if (centerX > 256) {
-        centerX = 256
-    } else if (centerX < 0) {
-        centerX = 0
-    }
-
-    if (centerY > 256) {
-        centerY = 256
-    } else if (centerY < 0) {
-        centerY = 0
-    }
 
     if (isInSchool([centerX, centerY])) {
         geoLocationMark.value = [centerX, centerY]
