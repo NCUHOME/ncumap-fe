@@ -24,7 +24,7 @@ onMounted(async () => {
 
 <template>
     <BackButton></BackButton>
-    <v-card v-if="currentActivity != null" variant="flat" color="#F2F8FA" min-height="100vh">
+    <v-card v-if="currentActivity != null" variant="flat" color="#F2F8FA" min-height="100%">
         <v-img gradient="to top, #F2F8FA 0, transparent 50%, transparent 50%" class="align-end" height="296"
             :src="currentActivity.image ? currentActivity.image : '/map-cut.png'" cover>
             <template v-slot:placeholder>
