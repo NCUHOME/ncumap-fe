@@ -215,7 +215,7 @@ const isActivitiesSheetShow = ref(false)
 
 onMounted(async () => {
     try {
-        uiModule.handleShowHeader(true)
+        uiModule.handleShowHeader(false)
         await fetcher.get(baseURL.value + "/api/v1/freshmen/manual").then(
             data => data.data
         ).then(
