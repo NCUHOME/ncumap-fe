@@ -106,7 +106,7 @@ const isInSchool = ([x, y]: number[]) => {
 }
 
 const geoSuccess = (position: any) => {
-    let [centerX, centerY] = convertCoordinates(gcj02towgs84(position.lng, position.lat))
+    let [centerX, centerY] = convertCoordinates([position.lng, position.lat])
     //let [centerX, centerY] = convertCoordinates([115.804362, 28.663298])
 
     if (isInSchool([centerX, centerY])) {

@@ -4,7 +4,7 @@ mapping campus, mapping life!
 
 ## 关于定位的说明
 
-定位数据来自高德 JS API，使用我个人的开发者 API Key，目前仅使用浏览器定位一种服务，日配额 50,000 次。获取到的位置数据为 gjc02 坐标，再调用 `/utils/gcj02towgs84.js` 中的函数转换为 wgs84 坐标，再调用 `convertCoordinates` 函数转换为校园地图坐标。
+定位数据来自高德 JS API，使用我个人的开发者 API Key，目前仅使用浏览器定位一种服务，日配额 50,000 次。获取到的位置调用 `convertCoordinates` 函数转换为校园地图坐标。
 
 ### 使用 wgs84 坐标 & 不使用高德地图组件的原因
 
