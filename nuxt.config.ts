@@ -2,6 +2,9 @@
 export default defineNuxtConfig({
   compatibilityDate: "2024-10-14",
   devtools: { enabled: true },
+  css: [
+    '@mdi/font/css/materialdesignicons.css'
+  ],
 
   modules: ["vuetify-nuxt-module", "@ant-design-vue/nuxt"]
 })
