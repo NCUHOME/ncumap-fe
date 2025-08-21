@@ -150,6 +150,13 @@
                     定位
                 </v-btn>
             </div>
+            <div>
+                <v-btn :rounded="0" stacked flat min-width="0" width="44px" height="50px" style="padding: 0;"
+                    @click="toChatAI()">
+                    <img src="/icons/问答.svg" />
+                    问答
+                </v-btn>
+            </div>
         </div>
     </div>
     <!-- 校车 -->
