@@ -144,9 +144,9 @@
                 </v-btn>
             </div>
             <div>
-                <v-btn :rounded="0" stacked flat min-width="0" width="44px" height="50px" style="padding: 0;"
+                <v-btn :rounded="0" stacked flat min-width="0" width="44px" height="50px" style="padding: 0"
                     @click="map.locate()">
-                    <img src="/icons/定位.svg" />
+                    <img src="/icons/定位.svg" style="scale: 1.14;" />
                     定位
                 </v-btn>
             </div>
